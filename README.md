@@ -26,3 +26,9 @@
 - how to rename columns with pd.read_csv()    
 - how to rename columns with str.replace()   
 - how to rename columns with pd.df.columns = list of names
+
+[How to drop or remove rows and columns of a pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20drop%20rows%20and%20columns%20of%20pandas%20dataframe%3F.ipynb)    
+- pd.drop()   
+
+[How to sort series or dataframe based on series?](http://localhost:8888/notebooks/scripts/How%20to%20sort%20series%20or%20dataframe%20based%20on%20series%3F%20.ipynb)    
+-pd.sort_values 
