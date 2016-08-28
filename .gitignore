@@ -1,6 +1,7 @@
 data/NYC_tripdata
 data/taxi_zones
 data/.ipynb_checkpoints/
+data/
 images/.DS_Store
 .ipynb_checkpoints/
 *.html
