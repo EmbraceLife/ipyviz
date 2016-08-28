@@ -58,4 +58,32 @@
 
 [How to apply functions to rows and columns of dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20apply%20functions%20to%20rows%20and%20columns%20of%20dataframe%3F.ipynb)    
 - apply pd.drop()
-- apply pd.mean() statistical functions 
+- apply pd.mean() statistical functions
+
+[How to use string methods in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20use%20string%20methods%20in%20pandas%20dataframe%3F.ipynb)    
+- pd.dataframe works with str.upper()   
+- str.replace()
+- str.contains()
+
+[How to change data type of pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20change%20data%20type%20of%20pandas%20dataframe%3F%20.ipynb)
+- pd.dtypes
+- pd.astype()
+
+[How and when to use groupby in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20and%20when%20to%20use%20groupby%20in%20pandas%20dataframe%3F.ipynb)    
+- group rows into groups based on categorical column
+
+[often used pd.series methods](http://localhost:8888/notebooks/scripts/often%20used%20pd.series%20methods.ipynb)   
+- pd.Series.value_counts()
+- pd.Series.value_counts(normalize=True)
+- pd.Series.unique()   
+- pd.Series.nunique()
+- pd.crosstab(pd.series, pd.series)
+
+[How to handle missing values in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20handle%20missing%20values%20in%20pandas%20dataframe%3F.ipynb)
+- pd.df.isnull()
+- pd.df.notnull()
+- pd.df[pd.df.isnull()]
+- pd.df.dropna(how = "all/any")
+- pd.df.dropna(how = "all/any", subset = ["colname1", "colname2"])
+- pd.df.value_counts(dropna=False)
+- pd.df.fillna(value = "string", inplace=True)
