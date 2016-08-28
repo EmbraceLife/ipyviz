@@ -1,0 +1,11 @@
+data/NYC_tripdata
+data/taxi_zones
+data/.ipynb_checkpoints/
+images/.DS_Store
+.ipynb_checkpoints/
+*.html
+bokeh_examples/
+books/
+pandas_dataSchool1.ipynb
+bokeh1.ipynb
+bokeh2.ipynb
