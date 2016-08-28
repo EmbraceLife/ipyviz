@@ -10,4 +10,7 @@
 - pd.shape
 - pd.ndim  
 - pd.ntypes
-- pd.describe()
+- pd.describe()   
+
+[How to rename column names in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20rename%20column%20names%20in%20pandas%20dataframe.ipynb)     
+- pd.rename()   
