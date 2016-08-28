@@ -87,3 +87,11 @@
 - pd.df.dropna(how = "all/any", subset = ["colname1", "colname2"])
 - pd.df.value_counts(dropna=False)
 - pd.df.fillna(value = "string", inplace=True)
+
+[How to make use of pandas dataframe index?](http://localhost:8888/notebooks/scripts/How%20to%20make%20use%20of%20pandas%20dataframe%20index%3F.ipynb)
+- pd.df.index: get row label or index of rows
+- pd.df.index.name = "string" to set index name
+- pd.df.set_index('colName', inplace=True)
+- pd.df.columns: get column names
+- pd.df.loc[rowIndex, 'columnName']
+- pd.df.describe().loc['25%', 'beer_servings']
