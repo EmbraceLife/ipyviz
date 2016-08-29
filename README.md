@@ -95,3 +95,36 @@
 - pd.df.columns: get column names
 - pd.df.loc[rowIndex, 'columnName']
 - pd.df.describe().loc['25%', 'beer_servings']
+
+[more about pandas index](http://localhost:8888/notebooks/scripts/more%20about%20pandas%20index.ipynb)   
+- power of `pd.df.set_index('country', inplace=True)`
+- pd.df.colname1.value_counts()
+- pd.df.colname1.value_counts().index
+- pd.df.colname1.value_counts().values
+- pd.df.colname1.value_counts()['index1']
+- pd.df.colname1.value_counts().sort_values()
+- pd.df.colname1.value_counts().sort_index()
+- pd.series * pd.series regulated by index
+- pd.concat([series1, series2], axis=1).head()
+
+
+[use of loc and ix](http://localhost:8888/notebooks/scripts/use%20of%20loc%20and%20ix.ipynb)
+- pd.df.loc()
+- pd.df.ix()
+
+[use of inplace and fillna with method bfill or ffill](http://localhost:8888/notebooks/scripts/use%20of%20inplace%20and%20dropna%20with%20method%20bfill%20or%20ffill.ipynb)
+- `fillna(method='bfill')`: fill NA backward
+- `fillna(method='ffill')`: fill NA forward
+
+
+[How to make pandas dataframe smaller and faster?](http://localhost:8888/notebooks/scripts/How%20to%20make%20pandas%20dataframe%20smaller%20and%20faster.ipynb)
+- pd.df.info()
+- pd.df.info(memory_usage = 'deep')
+- pd.df.memory_usage(deep = True)
+- pd.df.colname1.astype('category'): from string to category type
+- pd.df.colname1.cat.codes.head(): check index and codes
+- pd.df.colname1.cat.category.head(): check index and category
+- df.colname1.astype('category', categories=['good', 'very good', 'excellent'], ordered=True)
+
+[How do I use pandas with scikit-learn to create Kaggle submissions?](http://localhost:8888/notebooks/scripts/How%20do%20I%20use%20pandas%20with%20scikit-learn%20to%20create%20Kaggle%20submissions%3F.ipynb)
+- pd.DataFrame(): create a df from a dict
