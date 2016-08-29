@@ -128,3 +128,34 @@
 
 [How do I use pandas with scikit-learn to create Kaggle submissions?](http://localhost:8888/notebooks/scripts/How%20do%20I%20use%20pandas%20with%20scikit-learn%20to%20create%20Kaggle%20submissions%3F.ipynb)
 - pd.DataFrame(): create a df from a dict
+- from sklearn.linear_model import LogisticRegression
+- logreg = LogisticRegression()
+- logreg.fit(X, y)
+- new_pred_class = logreg.predict(X_new)
+- pd.df.set_index().to_csv()
+- pd.df.to_pickle()
+- pd.read_pickle()
+
+
+[pd.isnull, pd.df.isnull, df.loc, df.iloc, df.sample with args n, frac, random_state](http://localhost:8888/notebooks/scripts/pd.isnull%2C%20pd.df.isnull%2C%20df.loc%2C%20df.iloc%2C%20df.sample%20with%20args%20n%2C%20frac%2C%20random_state.ipynb)
+
+[How to create dummy variables in pandas?](http://localhost:8888/notebooks/scripts/How%20to%20create%20dummy%20variables%20in%20pandas%3F.ipynb)
+
+[How to work with dates and times in pandas?](http://localhost:8888/notebooks/scripts/How%20to%20work%20with%20dates%20and%20times%20in%20pandas%3F.ipynb)
+- pd.df.str.slice(start, end).astype(int)
+- pd.to_datetime()
+- df.Time.dt.hour.head()
+- df.Time.dt.weekday_name.head()
+- df.Time.dt.dayofyear.head()
+- df.Time.max() - df.Time.min()
+- (ufo.Time.max() - ufo.Time.min()).days
+
+[How to find and remove duplicate rows in pandas?](http://localhost:8888/notebooks/scripts/How%20to%20find%20and%20remove%20duplicate%20rows%20in%20pandas%3F.ipynb)
+- pd.series.duplicated()
+- pd.series.duplicated().sum()
+- pd.df.duplicated()
+- pd.df.duplicated().sum()
+- df.loc[df.duplicated(keep=False), :]
+- df.loc[df.duplicated(keep='last'), :]
+- df.loc[df.duplicated(keep='first'), :]
+- df.drop_duplicates(subset, keep)
