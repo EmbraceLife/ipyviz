@@ -159,3 +159,20 @@
 - df.loc[df.duplicated(keep='last'), :]
 - df.loc[df.duplicated(keep='first'), :]
 - df.drop_duplicates(subset, keep)
+
+[How to avoid a SettingWithCopyWarning in pandas?](http://localhost:8888/notebooks/scripts/How%20to%20avoid%20a%20SettingWithCopyWarning%20in%20pandas%3F.ipynb)
+- df.loc[df.colname1 >= 9, :].copy()
+
+[How to change display options in pandas?](http://localhost:8888/notebooks/scripts/How%20to%20change%20display%20options%20in%20pandas%3F.ipynb)
+- pd.get_option('display.max_rows')
+- pd.set_option('display.max_rows', None)
+- pd.reset_option('display.max_rows')
+- pd.describe_option('rows')
+- pd.set_option('display.float_format', '{:,}'.format)
+
+[How do I create a pandas DataFrame from another object?](http://localhost:8888/notebooks/scripts/How%20do%20I%20create%20a%20pandas%20DataFrame%20from%20another%20object%3F.ipynb)
+- create pandas df from dict, list, np.array
+- create pandas df from dict(np.array)
+- create pandas df from pd.concat([df, series], axis=1)
+
+[How do I apply a function to a pandas Series or DataFrame?](http://localhost:8888/notebooks/scripts/How%20do%20I%20apply%20a%20function%20to%20a%20pandas%20Series%20or%20DataFrame%3F.ipynb)

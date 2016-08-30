@@ -7,6 +7,3 @@ images/.DS_Store
 *.html
 bokeh_examples/
 books/
-pandas_dataSchool1.ipynb
-bokeh1.ipynb
-bokeh2.ipynb
