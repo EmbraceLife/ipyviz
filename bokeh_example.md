@@ -184,130 +184,74 @@ line = Step(data, y=['stamp', 'postcard'],
 show(line)
 ```
 
+[copy a data and convert string to number for dataframe](http://localhost:8888/notebooks/scripts/Charts.ipynb)
 ```python
 
 import pandas as pd
 
-
-
 from bokeh.io import output_notebook, show
 output_notebook()
-
-
-# ### Sample Data
-
 
 from bokeh.sampledata.autompg import autompg
 autompg.head(n=10)
 
-
-import pandas as pd
-
 from bokeh.sampledata.glucose import data
-
-
-
-# data.head()
-# data.dtypes
-# data.shape
-# data.copy()
-# type(data.isig)
-# type(pd.to_numeric(glucose.isig, errors=False))
-
 
 glucose = data.copy()[0:2000]
 glucose.isig = pd.to_numeric(glucose.isig, errors=False)
 glucose.head()
 # glucose.dtypes
+```
 
 
-from bokeh.charts import Area, Bar, BoxPlot, Donut, Dot, HeatMap, Histogram, Horizon, Line, Scatter, Step, TimeSeries
-
-
-scatter = Scatter(autompg, x='mpg', y='hp')
-show(scatter)
-
-
+[How to set default configure for figures?](http://localhost:8888/notebooks/scripts/Charts.ipynb)
+```python
 from bokeh.charts import defaults
 
 defaults.plot_height=300
 defaults.plot_width=800
 defaults.tools='pan, wheel_zoom, reset'
-
-show(TimeSeries(glucose))
-
-glucose.count()
-
-show(Horizon(glucose))
-
-# Line, Step
-from bokeh.palettes import Spectral8
-show(Step(glucose, palette=Spectral8))
-
-autompg.head()
-
-
-show(Scatter(autompg, x='mpg', y='hp', color='origin', legend='top_right'))
-
-show(BoxPlot(autompg, values='mpg', label=['cyl', 'origin'], title="MPG Summary (grouped by CYL, ORIGIN)"))
-
-
-autompg.head()
-
-
-show(Donut(autompg.cyl.astype('str'), palette=Spectral8, plot_width=400, plot_height=400, responsive=False,))
-
-autompg['make'] = autompg.name.str.split(' ').str[0]
-autompg.head()
-
-
-show(Donut(autompg.make, palette=Spectral8))
-
-
-show(Bar(autompg, label='make', tools='crosshair'))
-
-
-make_counts = pd.DataFrame(autompg.make.value_counts())
-make_counts = make_counts.sort_values('make', ascending=False)
-make_counts = make_counts.reset_index()
-make_counts = make_counts.rename(columns={'index': 'make', 'make': 'count'})
-make_counts.head()
-
-
-from bokeh.charts.attributes import cat
-show(Bar(make_counts, label=cat(columns='make', sort=False), values='count'))
-
-
-show(Bar(autompg, label='make', values='hp', tools='crosshair')) # , agg='mean'))
-
-
-show(Area(glucose, legend=True, stack=True))
-
-area = Area(glucose, legend=True, stack=True)
-#area.y_range.start = 0
-show(area)
-
-
-from bokeh.sampledata.gapminder import life_expectancy
-life_expectancy.head()
-
-decades = life_expectancy[life_expectancy.index.str.startswith('A')][['1964', '1974', '1984', '1994', '2004']]
-decades = decades.reset_index()
-decades
-
-show(Dot(decades, values='1964', label='Country', ylabel='Life Expectency'))
-
-
-from bokeh.charts.operations import blend
-b = blend('1964', '1974', '1984', '1994', '2004', name='life_expectency', labels_name='year')
-show(Dot(decades, values=b, label='Country', color='year', line_color='year', height=400, ylabel='Life Expectency'))
-
-
-from bokeh.charts.data_source import ChartDataSource
-ds = ChartDataSource.from_data(
-    decades,
-    x=blend('1964', '1974', '1984', '1994', '2004', name='life_expectency', labels_name='year')
-)
-ds.df.head(20)
-
 ```
+
+[How to create a donut chart?](http://localhost:8888/notebooks/scripts/Charts.ipynb)
+```python
+show(Donut(autompg.cyl.astype('str'), palette=Spectral8, plot_width=400, plot_height=400, responsive=False,))
+```
+
+[How to manipulate a string in pd.dataframe?]()
+```python
+autompg['make'] = autompg.name.str.split(' ').str[0]
+
+autompg['detail'] = autompg.name.str.split(' ').str[1]
+```
+
+[How to use ColumnDataSource?](http://localhost:8888/notebooks/scripts/How%20to%20use%20ColumnDataSource.ipynb)
+- ColumnDataSource takes both dict and dataframe
+- turn from dict to dataframe
+- column_data_source_dict = ColumnDataSource(data_dict)
+- column_data_source_dict.data
+
+[check version, IFrame, histogram, utils-gapminder](http://localhost:8888/notebooks/scripts/tutorial/00%20-%20intro.ipynb)
+- How to check library versions
+- histogram and bins
+- create a library on your own as utils  
+- run gapminder
+
+[How to create gap minder on jupyter notebook](http://localhost:8888/notebooks/scripts/tutorial/gapminder%20code%20in%20notebook.ipynb)
+
+
+[example.notebook.charts](http://localhost:8888/notebooks/scripts/tutorial/01%20-%20charts.ipynb)
+- bar, stacked bar, grouped bar
+- scatter with color and marker
+- pd.set_option
+- histogram with random.normal and random.lognormal
+- pd.DataFrame(dict)
+- pd.concat([normal, lognormal]): row-bind two dataframe
+- two histograms on the same figure or plot
+- 3 boxplots with diff colors on the same figure
+
+
+[notebook plotting](http://localhost:8888/notebooks/scripts/tutorial/02%20-%20plotting.ipynb)
+- from bokeh.io import output_notebook, show
+- create scatter plot with circle
+- numpy.linspace 
