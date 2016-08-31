@@ -183,3 +183,131 @@ line = Step(data, y=['stamp', 'postcard'],
 
 show(line)
 ```
+
+```python
+
+import pandas as pd
+
+
+
+from bokeh.io import output_notebook, show
+output_notebook()
+
+
+# ### Sample Data
+
+
+from bokeh.sampledata.autompg import autompg
+autompg.head(n=10)
+
+
+import pandas as pd
+
+from bokeh.sampledata.glucose import data
+
+
+
+# data.head()
+# data.dtypes
+# data.shape
+# data.copy()
+# type(data.isig)
+# type(pd.to_numeric(glucose.isig, errors=False))
+
+
+glucose = data.copy()[0:2000]
+glucose.isig = pd.to_numeric(glucose.isig, errors=False)
+glucose.head()
+# glucose.dtypes
+
+
+from bokeh.charts import Area, Bar, BoxPlot, Donut, Dot, HeatMap, Histogram, Horizon, Line, Scatter, Step, TimeSeries
+
+
+scatter = Scatter(autompg, x='mpg', y='hp')
+show(scatter)
+
+
+from bokeh.charts import defaults
+
+defaults.plot_height=300
+defaults.plot_width=800
+defaults.tools='pan, wheel_zoom, reset'
+
+show(TimeSeries(glucose))
+
+glucose.count()
+
+show(Horizon(glucose))
+
+# Line, Step
+from bokeh.palettes import Spectral8
+show(Step(glucose, palette=Spectral8))
+
+autompg.head()
+
+
+show(Scatter(autompg, x='mpg', y='hp', color='origin', legend='top_right'))
+
+show(BoxPlot(autompg, values='mpg', label=['cyl', 'origin'], title="MPG Summary (grouped by CYL, ORIGIN)"))
+
+
+autompg.head()
+
+
+show(Donut(autompg.cyl.astype('str'), palette=Spectral8, plot_width=400, plot_height=400, responsive=False,))
+
+autompg['make'] = autompg.name.str.split(' ').str[0]
+autompg.head()
+
+
+show(Donut(autompg.make, palette=Spectral8))
+
+
+show(Bar(autompg, label='make', tools='crosshair'))
+
+
+make_counts = pd.DataFrame(autompg.make.value_counts())
+make_counts = make_counts.sort_values('make', ascending=False)
+make_counts = make_counts.reset_index()
+make_counts = make_counts.rename(columns={'index': 'make', 'make': 'count'})
+make_counts.head()
+
+
+from bokeh.charts.attributes import cat
+show(Bar(make_counts, label=cat(columns='make', sort=False), values='count'))
+
+
+show(Bar(autompg, label='make', values='hp', tools='crosshair')) # , agg='mean'))
+
+
+show(Area(glucose, legend=True, stack=True))
+
+area = Area(glucose, legend=True, stack=True)
+#area.y_range.start = 0
+show(area)
+
+
+from bokeh.sampledata.gapminder import life_expectancy
+life_expectancy.head()
+
+decades = life_expectancy[life_expectancy.index.str.startswith('A')][['1964', '1974', '1984', '1994', '2004']]
+decades = decades.reset_index()
+decades
+
+show(Dot(decades, values='1964', label='Country', ylabel='Life Expectency'))
+
+
+from bokeh.charts.operations import blend
+b = blend('1964', '1974', '1984', '1994', '2004', name='life_expectency', labels_name='year')
+show(Dot(decades, values=b, label='Country', color='year', line_color='year', height=400, ylabel='Life Expectency'))
+
+
+from bokeh.charts.data_source import ChartDataSource
+ds = ChartDataSource.from_data(
+    decades,
+    x=blend('1964', '1974', '1984', '1994', '2004', name='life_expectency', labels_name='year')
+)
+ds.df.head(20)
+
+```
