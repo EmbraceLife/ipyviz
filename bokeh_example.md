@@ -237,10 +237,10 @@ autompg['detail'] = autompg.name.str.split(' ').str[1]
 - create a library on your own as utils  
 - run gapminder
 
-[How to create gap minder on jupyter notebook](http://localhost:8888/notebooks/scripts/tutorial/gapminder%20code%20in%20notebook.ipynb)
+[How to create gap minder on jupyter notebook](http://localhost:8888/notebooks/scripts/gapminder%20code%20in%20notebook.ipynb)
 
 
-[example.notebook.charts](http://localhost:8888/notebooks/scripts/tutorial/01%20-%20charts.ipynb)
+[example.notebook.charts](http://localhost:8888/notebooks/scripts/01%20-%20charts.ipynb)
 - bar, stacked bar, grouped bar
 - scatter with color and marker
 - pd.set_option
@@ -251,7 +251,7 @@ autompg['detail'] = autompg.name.str.split(' ').str[1]
 - 3 boxplots with diff colors on the same figure
 
 
-[notebook plotting](http://localhost:8888/notebooks/scripts/tutorial/02%20-%20plotting.ipynb)
+[notebook plotting](http://localhost:8888/notebooks/scripts/02%20-%20plotting.ipynb)
 - from bokeh.io import output_notebook, show
 - create scatter plot with circle
 - numpy.linspace
@@ -261,7 +261,7 @@ autompg['detail'] = autompg.name.str.split(' ').str[1]
 - plot multiple glyphs on the same figure
 - create a new list based on an old list
 
-[notebook styling](http://localhost:8888/notebooks/scripts/tutorial/03%20-%20styling.ipynb)
+[notebook styling](http://localhost:8888/notebooks/scripts/03%20-%20styling.ipynb)
 - figure.outline_line_width  
 - figure.outline_line_alpha
 - figure.outline_line_color
@@ -293,4 +293,4 @@ p.yaxis.major_label_orientation = "vertical"
 p.ygrid.band_fill_color = "navy"
 - make a legend
 - set legend location
-- fill_color: None and "white" is quite different 
+- fill_color: None and "white" is quite different
