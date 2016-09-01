@@ -254,4 +254,43 @@ autompg['detail'] = autompg.name.str.split(' ').str[1]
 [notebook plotting](http://localhost:8888/notebooks/scripts/tutorial/02%20-%20plotting.ipynb)
 - from bokeh.io import output_notebook, show
 - create scatter plot with circle
-- numpy.linspace 
+- numpy.linspace
+- size, color can be vectorized
+- different markers to apply: cicle, square, triangle, inverted, cross, diamend...
+- image and rgba
+- plot multiple glyphs on the same figure
+- create a new list based on an old list
+
+[notebook styling](http://localhost:8888/notebooks/scripts/tutorial/03%20-%20styling.ipynb)
+- figure.outline_line_width  
+- figure.outline_line_alpha
+- figure.outline_line_color
+- r.glyph.size = 50
+- r.glyph.fill_alpha = 0.2
+- r.glyph.line_color = "firebrick"
+- r.glyph.line_dash = [5, 5]
+- r.glyph.line_width = 2
+- tools = 'tap'
+- selection_color="firebrick"
+- nonselection_fill_alpha=0.2,
+- nonselection_fill_color="grey",
+- nonselection_line_color="firebrick",
+- nonselection_line_alpha=1.0
+- turn index to a series: type(subset.index.to_series())
+- How to set no tools and hide tools
+- p.line with x, y as two series
+- add hover tools: p.add_tools(HoverTool(tooltips=None, renderers=[cr], mode='vline'))
+- p.xaxis.major_label_orientation: change x-axis label's orientation
+- change minor tick line size and position: p.axis.minor_tick_in = -3
+- p.axis.minor_tick_out = 6
+- set x and y axis labels: p.yaxis.axis_label = "Pressure"
+- change x, y axis path width and color: p.xaxis.axis_line_width = 3
+p.xaxis.axis_line_color = "red"
+- change major tick/label: p.yaxis.major_label_text_color = "orange"
+p.yaxis.major_label_orientation = "vertical"
+- set x, y axis grid line: p.xgrid.grid_line_color/alpha/dash =
+- set x, y axis grid band: p.ygrid.band_fill_alpha = 0.1
+p.ygrid.band_fill_color = "navy"
+- make a legend
+- set legend location
+- fill_color: None and "white" is quite different 
