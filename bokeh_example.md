@@ -9,6 +9,8 @@
 - figure.circle
 - figure.triangle
 - from IPython.display import display
+- pd.set_option('display.max_rows', 10)
+- - pd.set_option('display.max_columns', 10)
 
 [Link 3 independent figures by brush or by row when selecting](http://localhost:8888/notebooks/scripts/Link%203%20independent%20figures%20by%20brush%20or%20by%20row%20when%20selecting.ipynb)
 - from bokeh.plotting import figure, output_notebook, show
@@ -294,3 +296,58 @@ p.ygrid.band_fill_color = "navy"
 - make a legend
 - set legend location
 - fill_color: None and "white" is quite different
+
+
+[notebook interactions](http://localhost:8888/notebooks/scripts/04%20-%20interactions.ipynb)
+- calc new list from old list
+- calc new series or dataframe from old series
+- create 3 plots in grids, without any connection or links
+- link panning: `s2 = figure(x_range=s1.x_range, y_range=s1.y_range, **plot_options)`
+- link brush: `left.circle('x', 'y0', source=source)`
+- ColumnDataSource data both dict or df: `source = ColumnDataSource(data=dict(x=x, y0=y0, y1=y1))`
+- get_custom_hover() using html/css to create tooltips
+- source.data['y'] = A * np.sin(w * x + phi)
+- push_notebook()
+- widgetbox() and Slider()
+- customJS callbacks: `from bokeh.models import TapTool, CustomJS, ColumnDataSource`
+- How to use customJS: `callback = CustomJS(code="alert('hello world')")`
+- How to use TapTool: `tap = TapTool(callback=callback)`
+
+[stock lines in a single figure](http://localhost:8888/notebooks/scripts/stock%20lines%20in%20a%20single%20figure.ipynb)
+- access and download stock data from Uqer.io   
+- parse date format
+- rename columns and drop columns and create new columns
+
+
+[Notebook models](http://localhost:8888/notebooks/scripts/06%20-%20models.ipynb)
+- How to access keys from values in a dictionary?
+- How to manipulate dataframe's each column using `map`, `apply`, `lambda args:`
+- How to use apply() and map() and tuple() together: `sprint["SelectedName"] = sprint[["Name", "Medal", "Year"]].apply(tuple, axis=1).map(lambda args: selected_name(*args))`
+- args vs `*args` : how to bring in multiple args
+- How to set x-y-axis, path line, major tick, color, size, position
+- How to add tooltips?
+
+[Notebook annotations](http://localhost:8888/notebooks/scripts/07%20-%20annotations.ipynb)
+- add horizontal or vertical span lines
+- add box annotations inside a figure
+- make a label (text) annotation
+- create a group of labels or labeset
+- create arrows
+
+
+[Notebook server](http://localhost:8888/notebooks/scripts/08%20-%20server.ipynb)
+- running .py files on terminal with `bokeh serve --show app.py`
+- add button and input widget
+- update plotting using button and input to change certain values
+- streaming data
+
+[Notebook Geo](http://localhost:8888/notebooks/scripts/09%20-%20geo.ipynb)
+
+[Notebook datashader](http://localhost:8888/notebooks/scripts/10%20-%20datashader.ipynb)
+
+[bolinger](http://localhost:8888/notebooks/scripts/bollinger.ipynb)
+- bokeh.plotting.patch()
+
+
+[burtin]()
+- StringIO(stringData): convert stringdata to dataframe 
