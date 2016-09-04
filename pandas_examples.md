@@ -46,23 +46,54 @@
 
 [How to read a data file into dataframe but with only specific columns?](http://localhost:8888/notebooks/scripts/How%20to%20read%20in%20data%20file%20into%20a%20dataframe%20with%20only%20specific%20columns%20%3F.ipynb)
 
-[How to read a data file into dataframe with specific rows?](http://localhost:8888/notebooks/scripts/How%20to%20read%20in%20data%20file%20into%20dataframe%20with%20only%20specific%20rows%20.ipynb)
-[How to iterate series or dataframe by rows?](http://localhost:8888/notebooks/scripts/How%20to%20iterate%20series%20and%20dataframe%20by%20rows%3F%20.ipynb)
+[How to read a data file into dataframe with specific rows?](http://localhost:8888/notebooks/scripts/How%20to%20read%20in%20data%20file%20into%20dataframe%20with%20only%20specific%20rows%20.ipynb)    
 
-[How to describe different columns of a dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20use%20pd.describe%20and%20How%20to%20select%20only%20numeric%20columns%3F.ipynb)
-[How to select only numeric columns from a dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20use%20pd.describe%20and%20How%20to%20select%20only%20numeric%20columns%3F.ipynb)
-- pd.describe()
-- pd.select_ntypes(include = [np.number])
+[How to iterate series or dataframe by rows?](http://localhost:8888/notebooks/scripts/How%20to%20iterate%20series%20and%20dataframe%20by%20rows%3F%20.ipynb)
+```python
+# various methods are available to iterate through a DataFrame
+for index, row in ufo.iterrows():
+    if index < 9:
+        print(index, row.City, row.State)
+
+ufo.loc[ufo.index<9, ['City', 'State']]        
+```
+
+[How to describe different columns of a dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20use%20pd.describe%20and%20How%20to%20select%20only%20numeric%20columns%3F.ipynb)    
+```python
+# describe all of the numeric columns
+drinks.describe()
+
+# pass the string 'all' to describe all columns
+drinks.describe(include='all')
+
+# pass a list of data types to only describe certain types
+drinks.describe(include=['object', 'float64'])
+
+# pass a list even if you only want to describe a single data type
+drinks.describe(include=['object'])
+```
+
+
+
+[How to select only numeric columns from a dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20use%20pd.describe%20and%20How%20to%20select%20only%20numeric%20columns%3F.ipynb)    
+```python
+drinks.select_ntypes(include = [np.number]).dtypes
+```
 
 
 [How to apply functions to rows and columns of dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20apply%20functions%20to%20rows%20and%20columns%20of%20dataframe%3F.ipynb)
-- apply pd.drop()
-- apply pd.mean() statistical functions
+```python
+drinks.mean(axis=0) # apply funcs to columns (going down by rows)
+drinks.mean(axis=1) # apply funcs to rows, (going right by columns)
+```
+
 
 [How to use string methods in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20use%20string%20methods%20in%20pandas%20dataframe%3F.ipynb)
-- pd.dataframe works with str.upper()
-- str.replace()
-- str.contains()
+```python
+orders.choice_description.str.replace('[', '').str.replace(']', '').head()
+orders[orders.item_name.str.contains('Chicken')].head(10)
+orders.item_name.str.upper().head()
+```
 
 [How to change data type of pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20change%20data%20type%20of%20pandas%20dataframe%3F%20.ipynb)
 - pd.dtypes

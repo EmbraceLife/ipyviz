@@ -350,4 +350,13 @@ p.ygrid.band_fill_color = "navy"
 
 
 [burtin]()
-- StringIO(stringData): convert stringdata to dataframe 
+- StringIO(stringData): convert stringdata to dataframe
+
+
+[How to run bokeh app project?]()
+- go to 'examples/app' folder
+- source activate tryme
+- bokeh serve --show gapminder (folder name)
+
+
+[How to write slider with python instead of javascript](http://localhost:8888/notebooks/scripts/How%20to%20write%20slider%20with%20python%20not%20javascript.ipynb)
