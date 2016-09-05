@@ -96,29 +96,65 @@ orders.item_name.str.upper().head()
 ```
 
 [How to change data type of pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20change%20data%20type%20of%20pandas%20dataframe%3F%20.ipynb)
-- pd.dtypes
-- pd.astype()
+```python
+drinks['beer_servings'] = drinks.beer_servings.astype(float)
+drinks = pd.read_csv('../data/drinks.csv', dtype={'beer_servings':float})
+orders.item_price.str.replace('$', '').astype(float).mean()
+orders.item_name.str.contains('Chicken').astype(int).head()
+```
+
 
 [How and when to use groupby in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20and%20when%20to%20use%20groupby%20in%20pandas%20dataframe%3F.ipynb)
-- group rows into groups based on categorical column
+```python
+drinks[drinks.continent=='Africa'].beer_servings.mean()
+drinks.groupby('continent').beer_servings.mean()
+drinks.groupby('continent').beer_servings.agg(['count', 'mean', 'min', 'max'])
+```
 
 [often used pd.series methods](http://localhost:8888/notebooks/scripts/often%20used%20pd.series%20methods.ipynb)
-- pd.Series.value_counts()
-- pd.Series.value_counts(normalize=True)
-- pd.Series.unique()
-- pd.Series.nunique()
-- pd.crosstab(pd.series, pd.series)
+```python
+movies.genre.value_counts()
+movies.genre.value_counts(normalize=True)
+movies.genre.unique()
+pd.crosstab(movies.genre, movies.content_rating)
+```
 
 [How to handle missing values in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20handle%20missing%20values%20in%20pandas%20dataframe%3F.ipynb)
-- pd.df.isnull()
-- pd.df.notnull()
-- pd.df[pd.df.isnull()]
-- pd.df.dropna(how = "all/any")
-- pd.df.dropna(how = "all/any", subset = ["colname1", "colname2"])
-- pd.df.value_counts(dropna=False)
-- pd.df.fillna(value = "string", inplace=True)
+```python
+ufo.isnull().tail() # isnull to detect NaN
+ufo.notnull().tail()
+ufo.isnull().sum()
+ufo[ufo.City.isnull()].head() # return only null rows
+# if 'any' values are missing in a row, then drop that row
+ufo.dropna(how='any').shape
+# if 'all' values are missing in a row, then drop that row (none are dropped in this case)
+ufo.dropna(how='all').shape
+# if 'any' values are missing in a row (considering only 'City' and 'Shape Reported'), then drop that row
+ufo.dropna(subset=['City', 'Shape Reported'], how='any').shape
+ufo.dropna(subset=['City', 'Shape Reported'], how='all').shape
+ufo['Shape Reported'].value_counts().head() # ignore na
+ufo['Shape Reported'].value_counts(dropna=False).head() # including na
+ufo['Shape Reported'].fillna(value='VARIOUS', inplace=True)
+```
 
 [How to make use of pandas dataframe index?](http://localhost:8888/notebooks/scripts/How%20to%20make%20use%20of%20pandas%20dataframe%20index%3F.ipynb)
+```python
+drinks.loc[23, 'beer_servings']
+# set an existing column as the index
+drinks.set_index('country', inplace=True)
+# country name can now be used for selection
+drinks.loc['Brazil', 'beer_servings']
+
+# index name is optional
+drinks.index.name = None    # get rid of indexName "country"
+# restore the index name, and move the index back to a column
+drinks.index.name = 'country'
+
+# many DataFrame methods output a DataFrame
+drinks.describe()
+# you can interact with any DataFrame using its index and columns
+drinks.describe().loc['25%', 'beer_servings']
+```
 - pd.df.index: get row label or index of rows
 - pd.df.index.name = "string" to set index name
 - pd.df.set_index('colName', inplace=True)
