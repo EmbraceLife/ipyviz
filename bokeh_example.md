@@ -1,23 +1,53 @@
 # bokeh examples
 
 [How to create a cosin curve line of circles](http://localhost:8888/notebooks/scripts/a%20cosin%20curve%20line%20of%20circles.ipynb)
-- numpy: cosin and linspace
-- bokeh.plotting: circle, show, figure, output_notebook
+```python
+from bokeh.plotting import figure, output_notebook, show
+from IPython.display import display
+
+from numpy import cos, linspace
+x = linspace(-6, 6, 100)
+y = cos(x)
+
+p = figure(width=500, height=500)
+
+p.circle(x, y, size=7, color="firebrick", alpha=0.5)
+
+show(p)
+```
+
 
 [create quad, circle, triangle in a single figure with same dataset](http://localhost:8888/notebooks/scripts/create%20quad%2C%20circle%2C%20triangle%20in%20a%20single%20figure%20with%20same%20dataset.ipynb)
-- figure.quad
-- figure.circle
-- figure.triangle
-- from IPython.display import display
-- pd.set_option('display.max_rows', 10)
-- - pd.set_option('display.max_columns', 10)
+```python
+american = autompg[autompg["origin"]==1]
+japanese = autompg[autompg["origin"]==3]
+
+# create a single figure
+p = figure()
+
+# create quad, circle, triangle in a single figure
+p.quad(left=years-0.4, right=years+0.4, bottom=avg-std, top=avg+std, fill_alpha=0.4)
+p.circle(x=japanese["yr"], y=japanese["mpg"], size=8,
+         alpha=0.4, line_color="red", fill_color=None, line_width=2)
+p.triangle(x=american["yr"], y=american["mpg"], size=8,
+           alpha=0.4, line_color="blue", fill_color=None, line_width=2)
+
+show(p)
+```
+
 
 [Link 3 independent figures by brush or by row when selecting](http://localhost:8888/notebooks/scripts/Link%203%20independent%20figures%20by%20brush%20or%20by%20row%20when%20selecting.ipynb)
-- from bokeh.plotting import figure, output_notebook, show
-- from bokeh.sampledata.autompg import autompg
-- from bokeh.models import ColumnDataSource
-- from bokeh.layouts import gridplot
-- source = ColumnDataSource(autompg.to_dict("list"))
+```python
+# convert pd.dataframe into dict, stored by columndatasource
+source = ColumnDataSource(autompg.to_dict("list")) # doc is good enoughb
+
+# display(source.data)
+display(source.data.keys())
+# display(np.array(source.data['origin']).unique())
+display(pd.Series(source.data['origin']).unique())
+
+
+```
 
 
 [scatter plot with x, y, color](http://localhost:8888/notebooks/scripts/scatter%20plot%20with%20x%2C%20y%2C%20color.ipynb)
