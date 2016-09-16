@@ -2,22 +2,72 @@
 
 
 [How to load a file with pd.read_table()?](http://localhost:8888/notebooks/scripts/Load%20file%20with%20pd.read_table.ipynb)
-- pd.read_table()
+
+```python
+import pandas as pd
+orders = pd.read_table('../data/chipotle.tsv')
+```
+
+
+[How to separate columns by '|', when reading/loading data file?](http://localhost:8888/notebooks/scripts/Load%20file%20with%20pd.read_table.ipynb)    
+[How to specify no header in data file, when reading/loading data file?](http://localhost:8888/notebooks/scripts/Load%20file%20with%20pd.read_table.ipynb)   
+[How to specify header as the first row in data file, when reading/loading data file?](http://localhost:8888/notebooks/scripts/Load%20file%20with%20pd.read_table.ipynb)   
+[How to provide column names for data file, when reading/loading data file?](http://localhost:8888/notebooks/scripts/Load%20file%20with%20pd.read_table.ipynb)   
+
+```python
+user_cols = ['user_id', 'age', 'gender', 'occupation', 'zip_code']
+# a table without header, must use header=None
+users = pd.read_table('../data/u.user.txt', sep='|', header=None, names=user_cols)
+
+users = pd.read_table('../data/u.user.txt', sep='|', header=0, names=user_cols)
+```
+
 
 [How to load a csv file with pd.read_table() and pd.read_csv()?](http://localhost:8888/notebooks/scripts/How%20to%20load%20a%20csv%20file%20with%20pd.read_table%20and%20pd.read_csv%3F.ipynb)
-- pd.read_table()
-- pd.read_csv()
+```python
+import pandas as pd
+
+ufo = pd.read_table('../data/ufo.csv', sep=',')
+
+ufo = pd.read_csv('../data/ufo.csv')
+
+```
 
 [How to extract a series of a dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20access%20a%20series%20of%20a%20dataframe%20with%20dot%20and%20brackets%20with%20strings%3F.ipynb)
-- pd.df.colname
-- pd.df["colname"]
+[How to create a new column for a dataframe ?](http://localhost:8888/notebooks/scripts/How%20to%20access%20a%20series%20of%20a%20dataframe%20with%20dot%20and%20brackets%20with%20strings%3F.ipynb)
 
-[How to understand pd.attributes and pd.methods?](http://localhost:8888/notebooks/scripts/How%20to%20use%20pd.head%2C%20pd.shape%2C%20pd.ndim%2C%20pd.describe%2C%20pd.ntypes.ipynb)
-- pd.head()
-- pd.shape
-- pd.ndim
-- pd.ntypes
-- pd.describe()
+```python
+import pandas as pd
+
+ufo = pd.read_csv('../data/ufo.csv')
+
+# access a column or series
+ufo.City
+ufo['City']
+
+# create a new column
+ufo['Location'] = ufo.City + ', ' + ufo.State
+```
+
+
+[use of pd.shape, pd.dtypes, pd.ndim, pd.describe()?](http://localhost:8888/notebooks/scripts/How%20to%20use%20pd.head%2C%20pd.shape%2C%20pd.ndim%2C%20pd.describe%2C%20pd.ntypes.ipynb)
+```python
+import pandas as pd
+
+movies = pd.read_csv('../data/imdb_1000.csv')
+
+movies.describe()
+
+movies.shape
+
+movies.dtypes
+
+movies.describe(exclude=['int64'])
+movies.describe(include=['object', 'float64'])
+movies.describe(include=['object'])
+
+movies.ndim
+```
 
 [How to rename column names in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20rename%20column%20names%20in%20pandas%20dataframe.ipynb)
 - how to rename columns with pd.rename(columns = dict)
@@ -485,3 +535,6 @@ drinks.loc[:, 'beer_servings':'wine_servings'].applymap(float).head()
 drinks.loc[:, 'beer_servings':'wine_servings'] = drinks.loc[:, 'beer_servings':'wine_servings'].applymap(float)
 drinks.head()
 ```
+
+
+[How to make use of round in pandas for dataframe?](http://localhost:8888/notebooks/scripts/use%20of%20round.ipynb)

@@ -38,6 +38,9 @@ show(p)
 
 [Link 3 independent figures by brush or by row when selecting](http://localhost:8888/notebooks/scripts/Link%203%20independent%20figures%20by%20brush%20or%20by%20row%20when%20selecting.ipynb)
 ```python
+from bokeh.models import ColumnDataSource
+from bokeh.layouts import gridplot
+
 # convert pd.dataframe into dict, stored by columndatasource
 source = ColumnDataSource(autompg.to_dict("list")) # doc is good enoughb
 
@@ -390,3 +393,6 @@ p.ygrid.band_fill_color = "navy"
 
 
 [How to write slider with python instead of javascript](http://localhost:8888/notebooks/scripts/How%20to%20write%20slider%20with%20python%20not%20javascript.ipynb)
+
+
+[Analysis of BYD's fundamental dataset?](http://localhost:8888/notebooks/scripts/BYD%20fundamental%20data%20analysis.ipynb)
