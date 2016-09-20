@@ -11,7 +11,7 @@ orders = pd.read_table('../data/chipotle.tsv')
 
 [How to separate columns by '|', when reading/loading data file?](http://localhost:8888/notebooks/scripts/Load%20file%20with%20pd.read_table.ipynb)    
 [How to specify no header in data file, when reading/loading data file?](http://localhost:8888/notebooks/scripts/Load%20file%20with%20pd.read_table.ipynb)   
-[How to specify header as the first row in data file, when reading/loading data file?](http://localhost:8888/notebooks/scripts/Load%20file%20with%20pd.read_table.ipynb)   
+[How to specify header as the first row in data file and rename the columns, when reading/loading data file?](http://localhost:8888/notebooks/scripts/Load%20file%20with%20pd.read_table.ipynb)   
 [How to provide column names for data file, when reading/loading data file?](http://localhost:8888/notebooks/scripts/Load%20file%20with%20pd.read_table.ipynb)   
 
 ```python
@@ -69,15 +69,31 @@ movies.describe(include=['object'])
 movies.ndim
 ```
 
-[How to rename column names in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20rename%20column%20names%20in%20pandas%20dataframe.ipynb)
-- how to rename columns with pd.rename(columns = dict)
-- get data file from up-directory "..data/chipotle.csv"
-- how to rename columns with pd.read_csv()
-- how to rename columns with str.replace()
-- how to rename columns with pd.df.columns = list of names
+[How to rename column names using `pd.rename()` in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20rename%20column%20names%20in%20pandas%20dataframe.ipynb)
+[How to rename column names using `pd.columns` in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20rename%20column%20names%20in%20pandas%20dataframe.ipynb)
+[How to rename column names using `pd.columns.str.replace()` in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20rename%20column%20names%20in%20pandas%20dataframe.ipynb)
+
+```python
+import pandas as pd
+ufo = pd.read_csv('../data/ufo.csv')
+
+ufo.columns
+
+ufo.rename(columns={'Colors Reported':'Colors_Reported', 'Shape Reported':'Shape_Reported'}, inplace=True)
+
+ufo_cols = ['city', 'colors reported', 'shape reported', 'state', 'time']
+ufo.columns = ufo_cols
+
+ufo = pd.read_csv('../data/ufo.csv', header=0, names=ufo_cols)
+ufo.columns = ufo.columns.str.replace(' ', '_')
+```
+
+
 
 [How to drop or remove rows and columns of a pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20drop%20rows%20and%20columns%20of%20pandas%20dataframe%3F.ipynb)
-- pd.drop()
+```python
+
+```
 
 [How to sort series or dataframe based on series?](http://localhost:8888/notebooks/scripts/How%20to%20sort%20series%20or%20dataframe%20based%20on%20series%3F%20.ipynb)
 -pd.sort_values
