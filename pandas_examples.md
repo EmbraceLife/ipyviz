@@ -69,9 +69,9 @@ movies.describe(include=['object'])
 movies.ndim
 ```
 
-[How to rename column names using `pd.rename()` in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20rename%20column%20names%20in%20pandas%20dataframe.ipynb)
-[How to rename column names using `pd.columns` in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20rename%20column%20names%20in%20pandas%20dataframe.ipynb)
-[How to rename column names using `pd.columns.str.replace()` in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20rename%20column%20names%20in%20pandas%20dataframe.ipynb)
+[How to rename column names using `pd.rename()` in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20rename%20column%20names%20in%20pandas%20dataframe.ipynb)    
+[How to rename column names using `pd.columns` in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20rename%20column%20names%20in%20pandas%20dataframe.ipynb)     
+[How to rename column names using `pd.columns.str.replace()` in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20rename%20column%20names%20in%20pandas%20dataframe.ipynb)     
 
 ```python
 import pandas as pd
@@ -92,36 +92,145 @@ ufo.columns = ufo.columns.str.replace(' ', '_')
 
 [How to drop or remove rows and columns of a pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20drop%20rows%20and%20columns%20of%20pandas%20dataframe%3F.ipynb)
 ```python
+import pandas as pd
+ufo = pd.read_csv('../data/ufo.csv')
+ufo.head()
 
+ufo.drop('Colors Reported', axis=1, inplace=True)
+ufo.head()
+
+ufo.drop(['City', 'State'], axis=1, inplace=True)
+ufo.head()
+
+ufo.drop([0, 1], axis=0, inplace=True)
+ufo.head()
 ```
 
-[How to sort series or dataframe based on series?](http://localhost:8888/notebooks/scripts/How%20to%20sort%20series%20or%20dataframe%20based%20on%20series%3F%20.ipynb)
--pd.sort_values
+[How to sort a single series with ascending order?](http://localhost:8888/notebooks/scripts/How%20to%20sort%20series%20or%20dataframe%20based%20on%20series%3F%20.ipynb)    
+[How to sort a single series with descending order?](http://localhost:8888/notebooks/scripts/How%20to%20sort%20series%20or%20dataframe%20based%20on%20series%3F%20.ipynb)    
+[How to sort a single series and force other columns of the dataframe to follow?](http://localhost:8888/notebooks/scripts/How%20to%20sort%20series%20or%20dataframe%20based%20on%20series%3F%20.ipynb)    
+[How to sort two series and force other columns to follow?](http://localhost:8888/notebooks/scripts/How%20to%20sort%20series%20or%20dataframe%20based%20on%20series%3F%20.ipynb)    
 
-[How to filter rows with columns conditions for pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20filter%20rows%20with%20columns%20and%20conditions%20for%20pandas%20dataframe%3F.ipynb)
-- `for in` loop
-- fill in empty list with `list.append`
-- convert a series to a list with `pd.Series()`
-- get the length of a list with `len()`
-- how to filter rows by `df[df.colname1 > number].colname2`?
-- how to filter with `df.loc[df.colname1 > number, 'colname2']`?
+```python
 
-[How to filter on multiple conditions for pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20filter%20on%20multiple%20conditions%20for%20pandas%20dataframe%3F%20.ipynb)
-- | and &
-- `df.colname.isin(list)`
+import pandas as pd
+movies = pd.read_csv('../data/imdb_1000.csv')
+movies.head()
 
-[How to read a data file into dataframe but with only specific columns?](http://localhost:8888/notebooks/scripts/How%20to%20read%20in%20data%20file%20into%20a%20dataframe%20with%20only%20specific%20columns%20%3F.ipynb)
+movies.title.sort_values().head()
+movies.title.sort_values(ascending=False).head()
+
+movies.sort_values('title').head()
+movies.sort_values('title', ascending=False).head()
+
+movies.sort_values(['content_rating', 'duration']).head()
+```
+
+[How to create an empty list and fill it value by value](http://localhost:8888/notebooks/scripts/How%20to%20filter%20rows%20with%20columns%20and%20conditions%20for%20pandas%20dataframe%3F.ipynb)     
+[How to turn list to pd.Series to use functions like .head()](http://localhost:8888/notebooks/scripts/How%20to%20filter%20rows%20with%20columns%20and%20conditions%20for%20pandas%20dataframe%3F.ipynb)     
+[list converted to pd.Series without column dimension and pd.DataFrame with  columns dimension ](http://localhost:8888/notebooks/scripts/How%20to%20filter%20rows%20with%20columns%20and%20conditions%20for%20pandas%20dataframe%3F.ipynb)     
+
+```python
+import pandas as pd
+movies = pd.read_csv('../data/imdb_1000.csv')
+movies.head()
+movies.shape
+booleans = []
+for length in movies.duration:
+    if length >= 200:
+        booleans.append(True)
+    else:
+        booleans.append(False)
+
+len(booleans)
+booleans[0:5]
+
+is_long = pd.Series(booleans)
+is_long.head()
+
+pd.Series(booleans).shape
+pd.DataFrame(booleans).shape
+```
+
+[How to filter the whole dataframe by constrain on a series/column?](http://localhost:8888/notebooks/scripts/How%20to%20filter%20rows%20with%20columns%20and%20conditions%20for%20pandas%20dataframe%3F.ipynb)    
+[How to filter the whole dataframe by constrain on a series/column, but only select one column to return?](http://localhost:8888/notebooks/scripts/How%20to%20filter%20rows%20with%20columns%20and%20conditions%20for%20pandas%20dataframe%3F.ipynb)      
+
+```python
+import pandas as pd
+movies = pd.read_csv('../data/imdb_1000.csv')
+movies.head()
+movies.shape
+
+movies[movies.duration >= 200]
+
+movies.loc[movies.duration >= 200, 'genre']
+```
+
+[How to filter dataframe with 2 or more conditions ?](http://localhost:8888/notebooks/scripts/How%20to%20filter%20on%20multiple%20conditions%20for%20pandas%20dataframe%3F%20.ipynb)
+
+```python
+
+import pandas as pd
+movies = pd.read_csv('../data/imdb_1000.csv')
+movies.head()
+movies[movies.duration >= 200]
+
+movies[(movies.duration >=200) & (movies.genre == 'Drama')]
+movies[(movies.duration >=200) | (movies.genre == 'Drama')].head()
+
+movies[(movies.genre == 'Crime') | (movies.genre == 'Drama') | (movies.genre == 'Action')].head(10)
+
+movies[movies.genre.isin(['Crime', 'Drama', 'Action'])].head(10)
+```
+
+[How to read a data file into dataframe but with only specific columns?](http://localhost:8888/notebooks/scripts/How%20to%20read%20in%20data%20file%20into%20a%20dataframe%20with%20only%20specific%20columns%20%3F.ipynb)     
+```python
+import pandas as pd
+
+# read a dataset of UFO reports into a DataFrame, and check the columns
+ufo = pd.read_csv('../data/ufo.csv')
+ufo.columns
+
+# specify which columns to include by name
+ufo = pd.read_csv('../data/ufo.csv', usecols=['City', 'State'])
+ufo.columns
+
+# or equivalently, specify columns by position
+ufo = pd.read_csv('../data/ufo.csv', usecols=[0, 4])
+ufo.columns
+```
+
 
 [How to read a data file into dataframe with specific rows?](http://localhost:8888/notebooks/scripts/How%20to%20read%20in%20data%20file%20into%20dataframe%20with%20only%20specific%20rows%20.ipynb)    
 
-[How to iterate series or dataframe by rows?](http://localhost:8888/notebooks/scripts/How%20to%20iterate%20series%20and%20dataframe%20by%20rows%3F%20.ipynb)
 ```python
-# various methods are available to iterate through a DataFrame
-for index, row in ufo.iterrows():
-    if index < 9:
-        print(index, row.City, row.State)
+import pandas as pd
+ufo = pd.read_csv('../data/ufo.csv', nrows=3)
+ufo
+```
 
-ufo.loc[ufo.index<9, ['City', 'State']]        
+
+
+[How to iterate a single series by rows?](http://localhost:8888/notebooks/scripts/How%20to%20iterate%20series%20and%20dataframe%20by%20rows%3F%20.ipynb)    
+[How to iterate a dataframe by rows?](http://localhost:8888/notebooks/scripts/How%20to%20iterate%20series%20and%20dataframe%20by%20rows%3F%20.ipynb)    
+
+```python
+
+import pandas as pd
+ufo = pd.read_csv('../data/ufo.csv')
+
+for c in ufo.City:
+    print(c)
+
+for index, row in ufo.head().iterrows():
+    print(index, row.City, row.State)
+
+for index, row in ufo[0:10].iterrows():
+    print(index, row.City, row.State)
+    if index > 3:
+        print(index)
+
+
 ```
 
 [How to describe different columns of a dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20use%20pd.describe%20and%20How%20to%20select%20only%20numeric%20columns%3F.ipynb)    
@@ -143,64 +252,180 @@ drinks.describe(include=['object'])
 
 [How to select only numeric columns from a dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20use%20pd.describe%20and%20How%20to%20select%20only%20numeric%20columns%3F.ipynb)    
 ```python
-drinks.select_ntypes(include = [np.number]).dtypes
+import pandas as pd
+
+drinks = pd.read_csv('../data/drinks.csv')
+drinks.dtypes
+
+import numpy as np
+drinks.select_dtypes(include=[np.float]).dtypes
+drinks.select_dtypes(include=[np.int]).dtypes
+drinks.select_dtypes(include=[np.number]).dtypes
 ```
 
 
-[How to apply functions to rows and columns of dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20apply%20functions%20to%20rows%20and%20columns%20of%20dataframe%3F.ipynb)
+[How to apply functions like `pd.drop()` and `pd.mean()` to rows and columns of dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20apply%20functions%20to%20rows%20and%20columns%20of%20dataframe%3F.ipynb)
 ```python
-drinks.mean(axis=0) # apply funcs to columns (going down by rows)
-drinks.mean(axis=1) # apply funcs to rows, (going right by columns)
+import pandas as pd
+
+drinks = pd.read_csv('../data/drinks.csv')
+drinks.head()
+
+drinks.drop('continent', axis=1).head()
+
+drinks.drop(2, axis=0).head()
+
+drinks.mean()
+
+drinks.mean(axis=0)
+
+drinks.mean(axis=1).head()
+
+drinks.mean(axis='index')
+
+drinks.mean(axis='columns').head()
 ```
 
 
 [How to use string methods in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20use%20string%20methods%20in%20pandas%20dataframe%3F.ipynb)
 ```python
-orders.choice_description.str.replace('[', '').str.replace(']', '').head()
-orders[orders.item_name.str.contains('Chicken')].head(10)
+import pandas as pd
+
+orders = pd.read_table('../data/chipotle.tsv')
+orders.head()
+
+'hello'.upper()
+
 orders.item_name.str.upper().head()
+
+orders.item_name.str.contains('Chicken').head()
+
+orders[orders.item_name.str.contains('Chicken')].head(10)
+
+orders.choice_description.str.replace('[', '').str.replace(']', '').head()
+
+orders.choice_description.str.replace('[\[\]]', '').head()
 ```
 
-[How to change data type of pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20change%20data%20type%20of%20pandas%20dataframe%3F%20.ipynb)
+[How to change data type of pandas series in a dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20change%20data%20type%20of%20pandas%20dataframe%3F%20.ipynb)    
+[How to change data type of pandas series of a dataframe when reading data file?](http://localhost:8888/notebooks/scripts/How%20to%20change%20data%20type%20of%20pandas%20dataframe%3F%20.ipynb)    
 ```python
+
+import pandas as pd
+
+drinks = pd.read_csv('../data/drinks.csv')
+drinks.dtypes
+
 drinks['beer_servings'] = drinks.beer_servings.astype(float)
+drinks.dtypes
+
 drinks = pd.read_csv('../data/drinks.csv', dtype={'beer_servings':float})
+drinks.dtypes
+
+orders = pd.read_table('../data/chipotle.tsv')
+orders.dtypes
+
 orders.item_price.str.replace('$', '').astype(float).mean()
+
+orders.item_name.str.contains('Chicken').head()
+
 orders.item_name.str.contains('Chicken').astype(int).head()
 ```
 
 
-[How and when to use groupby in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20and%20when%20to%20use%20groupby%20in%20pandas%20dataframe%3F.ipynb)
+[How to groupby in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20and%20when%20to%20use%20groupby%20in%20pandas%20dataframe%3F.ipynb)     
+[How to groupby and apply statistics to pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20and%20when%20to%20use%20groupby%20in%20pandas%20dataframe%3F.ipynb)     
 ```python
+import pandas as pd
+drinks = pd.read_csv('../data/drinks.csv')
+
+drinks.beer_servings.mean()
+
 drinks[drinks.continent=='Africa'].beer_servings.mean()
+
 drinks.groupby('continent').beer_servings.mean()
+
+drinks.groupby('continent').beer_servings.max()
+
 drinks.groupby('continent').beer_servings.agg(['count', 'mean', 'min', 'max'])
+
+drinks.groupby('continent').mean()
+
+%matplotlib inline
+
+drinks.groupby('continent').mean().plot(kind='bar')
 ```
 
-[often used pd.series methods](http://localhost:8888/notebooks/scripts/often%20used%20pd.series%20methods.ipynb)
+[How to get counts of a pd.Series in a dataframe?](http://localhost:8888/notebooks/scripts/often%20used%20pd.series%20methods.ipynb)     
+[How to get frequency of a pd.Series in a dataframe?](http://localhost:8888/notebooks/scripts/often%20used%20pd.series%20methods.ipynb)     
+[How to get all unique values of a pd.Series in a dataframe?](http://localhost:8888/notebooks/scripts/often%20used%20pd.series%20methods.ipynb)     
+[How to get number of unique values of a pd.Series in a dataframe?](http://localhost:8888/notebooks/scripts/often%20used%20pd.series%20methods.ipynb)     
+[How to create a crosstable of two pd.Series in a dataframe?](http://localhost:8888/notebooks/scripts/often%20used%20pd.series%20methods.ipynb)     
 ```python
+
+import pandas as pd
+movies = pd.read_csv('../data/imdb_1000.csv')
+
+movies.dtypes
+
+movies.genre.describe()
+
 movies.genre.value_counts()
+
 movies.genre.value_counts(normalize=True)
+
+type(movies.genre.value_counts())
+
+movies.genre.value_counts().head()
+
 movies.genre.unique()
+
+movies.genre.nunique()
+
 pd.crosstab(movies.genre, movies.content_rating)
+
+%matplotlib inline
+
+movies.duration.plot(kind='hist')
+
+movies.genre.value_counts().plot(kind='bar')
 ```
 
-[How to handle missing values in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20handle%20missing%20values%20in%20pandas%20dataframe%3F.ipynb)
+[How to check each value for NaN in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20handle%20missing%20values%20in%20pandas%20dataframe%3F.ipynb)     
+[How to check each value for NON-NaN in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20handle%20missing%20values%20in%20pandas%20dataframe%3F.ipynb)     
+[How to count each column's total NaN in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20handle%20missing%20values%20in%20pandas%20dataframe%3F.ipynb)     
+[How to drop a row when just one value is NaN in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20handle%20missing%20values%20in%20pandas%20dataframe%3F.ipynb)     
+[How to drop a row when every value is NaN in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20handle%20missing%20values%20in%20pandas%20dataframe%3F.ipynb)     
+[How to drop a row when specified column values are NaN in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20handle%20missing%20values%20in%20pandas%20dataframe%3F.ipynb)     
+[How to count a column's unique values occurrence while/not dropping NA in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20handle%20missing%20values%20in%20pandas%20dataframe%3F.ipynb)     
+[How to fill a column's NaN with a specific value in pandas dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20handle%20missing%20values%20in%20pandas%20dataframe%3F.ipynb)     
 ```python
+
+import pandas as pd
+ufo = pd.read_csv('../data/ufo.csv')
+
 ufo.isnull().tail() # isnull to detect NaN
 ufo.notnull().tail()
+
 ufo.isnull().sum()
-ufo[ufo.City.isnull()].head() # return only null rows
-# if 'any' values are missing in a row, then drop that row
+ufo[ufo.City.isnull()].head()
+
+ufo.shape
+
 ufo.dropna(how='any').shape
-# if 'all' values are missing in a row, then drop that row (none are dropped in this case)
+
 ufo.dropna(how='all').shape
-# if 'any' values are missing in a row (considering only 'City' and 'Shape Reported'), then drop that row
+
 ufo.dropna(subset=['City', 'Shape Reported'], how='any').shape
+
 ufo.dropna(subset=['City', 'Shape Reported'], how='all').shape
-ufo['Shape Reported'].value_counts().head() # ignore na
-ufo['Shape Reported'].value_counts(dropna=False).head() # including na
+
+ufo['Shape Reported'].value_counts().head()
+ufo['Shape Reported'].value_counts(dropna=False).head()
+
 ufo['Shape Reported'].fillna(value='VARIOUS', inplace=True)
+ufo['Shape Reported'].value_counts().head()
+
 ```
 
 [How to make use of pandas dataframe index?](http://localhost:8888/notebooks/scripts/How%20to%20make%20use%20of%20pandas%20dataframe%20index%3F.ipynb)
