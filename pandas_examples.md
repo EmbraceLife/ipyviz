@@ -430,35 +430,65 @@ ufo['Shape Reported'].value_counts().head()
 
 [How to make use of pandas dataframe index?](http://localhost:8888/notebooks/scripts/How%20to%20make%20use%20of%20pandas%20dataframe%20index%3F.ipynb)
 ```python
+
+import pandas as pd
+drinks = pd.read_csv('../data/drinks.csv')
+
+
+print(drinks.index)
+
+drinks[drinks.continent=='South America']
 drinks.loc[23, 'beer_servings']
-# set an existing column as the index
+
 drinks.set_index('country', inplace=True)
-# country name can now be used for selection
+print(drinks.index)
+
 drinks.loc['Brazil', 'beer_servings']
 
-# index name is optional
 drinks.index.name = None    # get rid of indexName "country"
-# restore the index name, and move the index back to a column
 drinks.index.name = 'country'
 
-# many DataFrame methods output a DataFrame
-drinks.describe()
-# you can interact with any DataFrame using its index and columns
 drinks.describe().loc['25%', 'beer_servings']
 ```
 
 
-[value_counts, index, values, sort_values, sort_index, pd.concat] (http://localhost:8888/notebooks/scripts/more%20about%20pandas%20index.ipynb)
-
+[How to set display for specific num of column and row?] (http://localhost:8888/notebooks/scripts/more%20about%20pandas%20index.ipynb)    
+[How to replace numeric index with a particular column as index for dataframe?] (http://localhost:8888/notebooks/scripts/more%20about%20pandas%20index.ipynb)    
+[How to to access index and values from a pd.Series?] (http://localhost:8888/notebooks/scripts/more%20about%20pandas%20index.ipynb)    
+[How to access values from index of a pd.Series?] (http://localhost:8888/notebooks/scripts/more%20about%20pandas%20index.ipynb)    
+[How to create a pd.Series given values, index and name of Series?] (http://localhost:8888/notebooks/scripts/more%20about%20pandas%20index.ipynb)    
+[How to do calculation between pd.Series even they are not equal length?] (http://localhost:8888/notebooks/scripts/more%20about%20pandas%20index.ipynb)    
+[How to combine a dataframe with a pd.Series even they are with different length?] (http://localhost:8888/notebooks/scripts/more%20about%20pandas%20index.ipynb)    
 ```python
+
+import pandas as pd
+from IPython.display import display
+pd.set_option('display.max_rows', 10)
+pd.set_option('display.max_columns', 10)
+
+drinks = pd.read_csv('../data/drinks.csv')
+drinks.head()
+drinks.index
+
+drinks.set_index('country', inplace=True)
+drinks.continent.head()
+drinks.continent.value_counts()
+
 drinks.continent.value_counts().index
 drinks.continent.value_counts().values
 drinks.continent.value_counts()['Africa']
+
+
 drinks.continent.value_counts().sort_values()
 drinks.continent.value_counts().sort_index()
+
+drinks.beer_servings.head()
+
 people = pd.Series([3000000, 85000], index=['Albania', 'Andorra'], name='population')
-# people has 2 rows originally, but it will match the length of beer_servings by adding NaNs
+
 (drinks.beer_servings * people).head()
+
+
 pd.concat([drinks, people], axis=1).head()
 ```
 
@@ -473,14 +503,22 @@ data.to_csv('byd_fundamental.csv', encoding="GBK")
 ```python
 DataAPI.EquShareGet(secID=u"",ticker=u"002594",beginDate=u"20110630",endDate=u"20160903",partyID=u"",
   field=u"ticker,secShortName,changeDate,totalShares,sharesA,nonrestfloatA,restShares,nonrestFloatShares",pandas="1")
+
 ```
 
 
-[use of loc and ix](http://localhost:8888/notebooks/scripts/use%20of%20loc%20and%20ix.ipynb)
+[How to access values by index (numeric) and column (names) in a dataframe?](http://localhost:8888/notebooks/scripts/use%20of%20loc%20and%20ix.ipynb)    
+[How to access values by condition on index and column (names) in a dataframe?](http://localhost:8888/notebooks/scripts/use%20of%20loc%20and%20ix.ipynb)    
+[How to access values by index (numeric) and column (numeric not names) in a dataframe?](http://localhost:8888/notebooks/scripts/use%20of%20loc%20and%20ix.ipynb)    
+[How to access values by index (numeric or names) and column (names or numeric) in a dataframe?](http://localhost:8888/notebooks/scripts/use%20of%20loc%20and%20ix.ipynb)    
+
 ```python
-ufo[['City', 'State']].head(3)
-ufo.loc[ufo.City=='Oakland', 'State']
-ufo[ufo.City=='Oakland'].State
+import pandas as pd
+from IPython.display import display
+pd.set_option('display.max_rows', 10)
+pd.set_option('display.max_columns', 10)
+
+ufo = pd.read_csv('../data/ufo.csv')
 
 ufo.loc[0, :]
 ufo.loc[[0, 1, 2], :]
@@ -490,190 +528,308 @@ ufo.loc[0:2, 'City']
 ufo.loc[0:2, ['City', 'State']]
 ufo.loc[0:2, 'City':'State']
 
+ufo.loc[ufo.City=='Oakland', 'State']
+
+
 ufo.iloc[[0, 1], [0, 3]]
 ufo.iloc[0:2, 0:4]
 ufo.iloc[0:2, :]
 
+drinks = pd.read_csv('../data/drinks.csv', index_col='country')
+
 drinks.ix['Albania', 0]
 drinks.ix[1, 'beer_servings']
+
 drinks.ix['Albania':'Andorra', 0:2]
 ufo.ix[0:2, 0:2]
 ```
 
-[How to back and forward fill NA of a dataframe?](http://localhost:8888/notebooks/scripts/use%20of%20inplace%20and%20dropna%20with%20method%20bfill%20or%20ffill.ipynb)
+[How to back and forward fill NA of a dataframe or a pd.Series?](http://localhost:8888/notebooks/scripts/use%20of%20inplace%20and%20dropna%20with%20method%20bfill%20or%20ffill.ipynb)
 ```python
-# drop a row if any value is missing from that row (doesn't affect the DataFrame since inplace=False)
+
+import pandas as pd
+from IPython.display import display
+
+ufo = pd.read_csv('../data/ufo.csv')
+ufo.drop('City', axis=1).head()
+
+ufo.drop('City', axis=1, inplace=True)
+
 ufo.dropna(how='any').shape
 
 ufo = ufo.set_index('Time')
 
-# fill missing values using "backward fill" strategy (doesn't affect the DataFrame since inplace=False)
+
+ufo['Colors Reported'].fillna(method='bfill').tail()
+
 ufo.fillna(method='bfill').tail()
 
-# fill missing values using "backward fill" strategy (doesn't affect the DataFrame since inplace=False)
-ufo.fillna(method='bfill').tail()
+ufo.fillna(method='ffill').tail(10)
 ```
 
 
-[How to make pandas dataframe smaller and faster?](http://localhost:8888/notebooks/scripts/How%20to%20make%20pandas%20dataframe%20smaller%20and%20faster.ipynb)
+[How to make pandas dataframe smaller and faster?](http://localhost:8888/notebooks/scripts/How%20to%20make%20pandas%20dataframe%20smaller%20and%20faster.ipynb)    
+[How much memory does a data file or dataframe require?](http://localhost:8888/notebooks/scripts/How%20to%20make%20pandas%20dataframe%20smaller%20and%20faster.ipynb)    
+[How to change dtype object to category?](http://localhost:8888/notebooks/scripts/How%20to%20make%20pandas%20dataframe%20smaller%20and%20faster.ipynb)    
+[How to turn category levels to codes?](http://localhost:8888/notebooks/scripts/How%20to%20make%20pandas%20dataframe%20smaller%20and%20faster.ipynb)    
+[How to access category values/levels?](http://localhost:8888/notebooks/scripts/How%20to%20make%20pandas%20dataframe%20smaller%20and%20faster.ipynb)    
+[How to create and sort a dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20make%20pandas%20dataframe%20smaller%20and%20faster.ipynb)    
+[How to convert a category column to a ordered category column?](http://localhost:8888/notebooks/scripts/How%20to%20make%20pandas%20dataframe%20smaller%20and%20faster.ipynb)    
+[How to create a filter condition based on ordered category column?](http://localhost:8888/notebooks/scripts/How%20to%20make%20pandas%20dataframe%20smaller%20and%20faster.ipynb)    
 ```python
-# use the 'category' data type (new in pandas 0.15) to store the 'continent' strings as integers
-drinks['continent'] = drinks.continent.astype('category')
-# strings are now encoded (0 means 'Africa', 1 means 'Asia', 2 means 'Europe', etc.)
-drinks.continent.cat.codes.head()
-drinks.country.cat.categories
-df['quality'] = df.quality.astype('category', categories=['good', 'very good', 'excellent'], ordered=True)
 
-# sort the DataFrame by the 'quality' Series (logical order)
+import pandas as pd
+from IPython.display import display
+
+drinks = pd.read_csv('../data/drinks.csv')
+
+drinks.info()
+
+drinks.info(memory_usage='deep')
+drinks.memory_usage(deep=True)
+
+
+drinks['continent'] = drinks.continent.astype('category')
+drinks.dtypes
+
+display(drinks.continent.cat.codes.head())
+drinks.continent.cat.codes.unique()
+
+drinks['country'] = drinks.country.astype('category')
+drinks.memory_usage(deep=True)
+
+drinks.country.cat.categories
+
+df = pd.DataFrame({'ID':[100, 101, 102, 103], 'quality':['good', 'very good', 'good', 'excellent']})
+df
+
 df.sort_values('quality')
 
-# comparison operators work with ordered categories
+df['quality'] = df.quality.astype('category', categories=['good', 'very good', 'excellent'], ordered=True)
+df.quality
+
+df.sort_values('quality')
+
 df.loc[df.quality > 'good', :]
 ```
 
 
-[How do I use pandas with scikit-learn to create Kaggle submissions with pickle?](http://localhost:8888/notebooks/scripts/How%20do%20I%20use%20pandas%20with%20scikit-learn%20to%20create%20Kaggle%20submissions%3F.ipynb)
+[How do I use pandas with scikit-learn to create Kaggle submissions with pickle?](http://localhost:8888/notebooks/scripts/How%20do%20I%20use%20pandas%20with%20scikit-learn%20to%20create%20Kaggle%20submissions%3F.ipynb)    
+[how to create a feature dataframe and survived series](http://localhost:8888/notebooks/scripts/How%20do%20I%20use%20pandas%20with%20scikit-learn%20to%20create%20Kaggle%20submissions%3F.ipynb)    
+[how to access LogisticRegression from sklearn package?](http://localhost:8888/notebooks/scripts/How%20do%20I%20use%20pandas%20with%20scikit-learn%20to%20create%20Kaggle%20submissions%3F.ipynb)    
+[how to train LogisticRegression model with feature dataframe and survived column?](http://localhost:8888/notebooks/scripts/How%20do%20I%20use%20pandas%20with%20scikit-learn%20to%20create%20Kaggle%20submissions%3F.ipynb)    
+[how to calculate test-survived-column with LogisticRegression model with test-features-dataframe?](http://localhost:8888/notebooks/scripts/How%20do%20I%20use%20pandas%20with%20scikit-learn%20to%20create%20Kaggle%20submissions%3F.ipynb)    
+[how to create a dataframe from a dictionary within two series inside?](http://localhost:8888/notebooks/scripts/How%20do%20I%20use%20pandas%20with%20scikit-learn%20to%20create%20Kaggle%20submissions%3F.ipynb)    
+[how to save and read csv and pkl files?](http://localhost:8888/notebooks/scripts/How%20do%20I%20use%20pandas%20with%20scikit-learn%20to%20create%20Kaggle%20submissions%3F.ipynb)    
+
+
 ```python
-# using two columns to train model
+
+import pandas as pd
+from IPython.display import display
+
+train = pd.read_csv('../data/titanic_train.csv')
+train.head()
+
 feature_cols = ['Pclass', 'Parch']
 X = train.loc[:, feature_cols]
+X.shape
 
-# get response column
 y = train.Survived
+y.shape
 
-# fit a classification model to the training data
 from sklearn.linear_model import LogisticRegression
 logreg = LogisticRegression()
 logreg.fit(X, y)
 
-# create a feature matrix from the testing data that matches the training data
+test = pd.read_csv('../data/titanic_test.csv')
+
 X_new = test.loc[:, feature_cols]
-# use the fitted model to make predictions for the testing set observations
+
 new_pred_class = logreg.predict(X_new)
 
-# ensure that PassengerID is the first column by setting it as the index
+pd.DataFrame({'PassengerId':test.PassengerId, 'Survived':new_pred_class}).head()
+
 pd.DataFrame({'PassengerId':test.PassengerId, 'Survived':new_pred_class}).set_index('PassengerId').head()
 
-# save a DataFrame to disk ("pickle it")
+pd.DataFrame({'PassengerId':test.PassengerId, 'Survived':new_pred_class}).set_index('PassengerId').to_csv('sub.csv')
+
 train.to_pickle('train.pkl')
 
-# read a pickled object from disk ("unpickle it")
 pd.read_pickle('train.pkl').head()
 ```
 
 
-[pd.isnull, pd.df.isnull, df.loc, df.iloc, df.sample with args n, frac, random_state](http://localhost:8888/notebooks/scripts/pd.isnull%2C%20pd.df.isnull%2C%20df.loc%2C%20df.iloc%2C%20df.sample%20with%20args%20n%2C%20frac%2C%20random_state.ipynb)
+[pd.isnull, pd.df.isnull, df.loc, df.iloc, df.sample with args n, frac, random_state](http://localhost:8888/notebooks/scripts/pd.isnull%2C%20pd.df.isnull%2C%20df.loc%2C%20df.iloc%2C%20df.sample%20with%20args%20n%2C%20frac%2C%20random_state.ipynb)    
+[pd.loc() is inclusive on index range, pd.iloc() is exclusive on index range end point](http://localhost:8888/notebooks/scripts/pd.isnull%2C%20pd.df.isnull%2C%20df.loc%2C%20df.iloc%2C%20df.sample%20with%20args%20n%2C%20frac%2C%20random_state.ipynb)    
+[How to randomly select a number of rows of a dataframe?](http://localhost:8888/notebooks/scripts/pd.isnull%2C%20pd.df.isnull%2C%20df.loc%2C%20df.iloc%2C%20df.sample%20with%20args%20n%2C%20frac%2C%20random_state.ipynb)    
+[How to randomly select a proportion of rows of a dataframe?](http://localhost:8888/notebooks/scripts/pd.isnull%2C%20pd.df.isnull%2C%20df.loc%2C%20df.iloc%2C%20df.sample%20with%20args%20n%2C%20frac%2C%20random_state.ipynb)    
+[How to randomly select a proportion of rows of a dataframe?](http://localhost:8888/notebooks/scripts/pd.isnull%2C%20pd.df.isnull%2C%20df.loc%2C%20df.iloc%2C%20df.sample%20with%20args%20n%2C%20frac%2C%20random_state.ipynb)    
+[How to randomly select with a random-seed?](http://localhost:8888/notebooks/scripts/pd.isnull%2C%20pd.df.isnull%2C%20df.loc%2C%20df.iloc%2C%20df.sample%20with%20args%20n%2C%20frac%2C%20random_state.ipynb)    
+
 ```python
-# use 'isnull' as a top-level function
+
+import pandas as pd
+from IPython.display import display
+
+ufo = pd.read_csv('../data/ufo.csv')
+ufo.head()
+
 pd.isnull(ufo).head()
 
-# sample 3 rows from the DataFrame without replacement (new in pandas 0.16.1)
+ufo.isnull().head()
+
+ufo.loc[0:4, :]
+ufo.iloc[0:4, :]
+
+ufo.values[0:4, :]
+
+'python'[0:4]
+ufo.loc[0:4, 'City':'State']
+
 ufo.sample(n=3)
-
-# use the 'random_state' parameter for reproducibility
 ufo.sample(n=3, random_state=42)
-
-# sample 75% of the DataFrame's rows without replacement
 train = ufo.sample(frac=0.75, random_state=99)
 
-# store the remaining 25% of the rows in another DataFrame
 test = ufo.loc[~ufo.index.isin(train.index), :]
 ```
 
 
 
-[How to create dummy variables in pandas?](http://localhost:8888/notebooks/scripts/How%20to%20create%20dummy%20variables%20in%20pandas%3F.ipynb)
+[How to create a new Series using pd.SeriesName.map()?](http://localhost:8888/notebooks/scripts/How%20to%20create%20dummy%20variables%20in%20pandas%3F.ipynb)    
+[How to convert a single column full of 'female' and 'male' values into female and male two columns with 1 and 0?](http://localhost:8888/notebooks/scripts/How%20to%20create%20dummy%20variables%20in%20pandas%3F.ipynb)    
+[How to access a particular column out of the converted 2 or more columns?](http://localhost:8888/notebooks/scripts/How%20to%20create%20dummy%20variables%20in%20pandas%3F.ipynb)    
+[How to modify converted column names using prefix argument?](http://localhost:8888/notebooks/scripts/How%20to%20create%20dummy%20variables%20in%20pandas%3F.ipynb)    
+[How to convert more than one column into several columns?](http://localhost:8888/notebooks/scripts/How%20to%20create%20dummy%20variables%20in%20pandas%3F.ipynb)    
+[How to drop the first column out of the converted several columns?](http://localhost:8888/notebooks/scripts/How%20to%20create%20dummy%20variables%20in%20pandas%3F.ipynb)    
 ```python
-# create the 'Sex_male' dummy variable using the 'map' method
+import pandas as pd
+
+train = pd.read_csv('../data/titanic_train.csv')
+
 train['Sex_male'] = train.Sex.map({'female':0, 'male':1})
 
-# alternative: use 'get_dummies' to create one column for every possible value
 pd.get_dummies(train.Sex).head()
 
-# drop the first dummy variable ('female') using the 'iloc' method
 pd.get_dummies(train.Sex).iloc[:, 1:].head()
 
-# add a prefix to identify the source of the dummy variables
-pd.get_dummies(train.Sex, prefix='Sex')
-pd.get_dummies(train.Sex, prefix='Sex').iloc[:, 1:].head()
+pd.get_dummies(train.Sex, prefix='Sex').iloc[:, 0:].head()
 
-# save the DataFrame of dummy variables and concatenate them to the original DataFrame
+pd.get_dummies(train.Embarked, prefix='Embarked').head(10)
+
+pd.get_dummies(train.Embarked, prefix='Embarked').iloc[:, 1:].head(10)
+
 embarked_dummies = pd.get_dummies(train.Embarked, prefix='Embarked').iloc[:, 1:]
+
 train = pd.concat([train, embarked_dummies], axis=1)
 
-# pass the DataFrame to 'get_dummies' and specify which columns to dummy (it drops the original columns)
+train = pd.read_csv('../data/titanic_train.csv')
+
 pd.get_dummies(train, columns=['Sex', 'Embarked']).head()
 
-# use the 'drop_first' parameter (new in pandas 0.18) to drop the first dummy variable for each feature
 pd.get_dummies(train, columns=['Sex', 'Embarked'], drop_first=True).head()
 ```
 
 
-[How to work with dates and times in pandas?](http://localhost:8888/notebooks/scripts/How%20to%20work%20with%20dates%20and%20times%20in%20pandas%3F.ipynb)
+[How to slice a Series/column of strings in a dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20work%20with%20dates%20and%20times%20in%20pandas%3F.ipynb)     
+[How to convert datetime strings to datetime type in a dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20work%20with%20dates%20and%20times%20in%20pandas%3F.ipynb)     
+[How to access hour/weekday_name/days/dayofyear values of a column of datetime type?](http://localhost:8888/notebooks/scripts/How%20to%20work%20with%20dates%20and%20times%20in%20pandas%3F.ipynb)     
+[How to create a single pd.datetime value and use to compare with other column of datetime values?](http://localhost:8888/notebooks/scripts/How%20to%20work%20with%20dates%20and%20times%20in%20pandas%3F.ipynb)     
+[How to do max, min, calculation on two datetime values?](http://localhost:8888/notebooks/scripts/How%20to%20work%20with%20dates%20and%20times%20in%20pandas%3F.ipynb)     
 ```python
-# convert 'Time' to datetime format
+
+import pandas as pd
+from IPython.display import display
+
+ufo = pd.read_csv('../data/ufo.csv')
+ufo.head()
+
+ufo.dtypes
+
+ufo.Time.str.slice(-5, -3).astype(int).head()
+
 ufo['Time'] = pd.to_datetime(ufo.Time)
+ufo.head()
 
-# convenient Series attributes are now available
+ufo.dtypes
+
 ufo.Time.dt.hour.head()
-
 ufo.Time.dt.weekday_name.head()
-
 ufo.Time.dt.dayofyear.head()
 
-# convert a single string to datetime format (outputs a timestamp object)
 ts = pd.to_datetime('1/1/1999')
 
-# compare a datetime Series with a timestamp
 ufo.loc[ufo.Time >= ts, :].head()
 
-# perform mathematical operations with timestamps (outputs a timedelta object)
+ufo.Time.max()
+
 ufo.Time.max() - ufo.Time.min()
 
-# timedelta objects also have attributes you can access
 (ufo.Time.max() - ufo.Time.min()).days
 
-# count the number of UFO reports per year
+
 ufo['Year'] = ufo.Time.dt.year
-display(ufo.Year)
-# after value_counts, index becomes years
-ufo.Year.value_counts().sort_index().head()
+
+
+get_ipython().magic(u'matplotlib inline')
+ufo.Year.value_counts().sort_index().plot()
 ```
 
-[How to find and remove duplicate rows in pandas?](http://localhost:8888/notebooks/scripts/How%20to%20find%20and%20remove%20duplicate%20rows%20in%20pandas%3F.ipynb)
+
+[How to read datafile while give it column names and make one column to be index?](http://localhost:8888/notebooks/scripts/How%20to%20find%20and%20remove%20duplicate%20rows%20in%20pandas%3F.ipynb)     
+[How to check whether every value of a column of a dataframe is a duplicate to a value previously somewhere in the same column?](http://localhost:8888/notebooks/scripts/How%20to%20find%20and%20remove%20duplicate%20rows%20in%20pandas%3F.ipynb)     
+[How to get sum of all duplicates in a column of a dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20find%20and%20remove%20duplicate%20rows%20in%20pandas%3F.ipynb)     
+[How to check every row of a dataframe is a duplicate of a row previously somewhere?](http://localhost:8888/notebooks/scripts/How%20to%20find%20and%20remove%20duplicate%20rows%20in%20pandas%3F.ipynb)     
+[How to consider only those rows appear in latter to be duplicated rows (keep='first' part as non-duplicate)?](http://localhost:8888/notebooks/scripts/How%20to%20find%20and%20remove%20duplicate%20rows%20in%20pandas%3F.ipynb)     
+[How to consider only those rows appear in former to be duplicated rows (keep='last' part as non-duplicate) ?](http://localhost:8888/notebooks/scripts/How%20to%20find%20and%20remove%20duplicate%20rows%20in%20pandas%3F.ipynb)     
+[How to keep all duplicated rows ?](http://localhost:8888/notebooks/scripts/How%20to%20find%20and%20remove%20duplicate%20rows%20in%20pandas%3F.ipynb)     
+[How to drop the duplicates appear in first part of dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20find%20and%20remove%20duplicate%20rows%20in%20pandas%3F.ipynb)    
+[How to drop the duplicates appear in last part of dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20find%20and%20remove%20duplicate%20rows%20in%20pandas%3F.ipynb)    
+[How to drop all duplicates of the dataframe?](http://localhost:8888/notebooks/scripts/How%20to%20find%20and%20remove%20duplicate%20rows%20in%20pandas%3F.ipynb)    
+
+
 ```python
-# read a dataset of movie reviewers into a DataFrame
+
+import pandas as pd
+
 user_cols = ['user_id', 'age', 'gender', 'occupation', 'zip_code']
 users = pd.read_table('../data/u.user.txt', sep='|', header=None, names=user_cols, index_col='user_id')
 
-# detect duplicate zip codes: True if an item is identical to a previous item
-users.zip_code.duplicated().tail()
 
-# count the duplicate items (True becomes 1, False becomes 0)
+users.zip_code.duplicated().tail(10)
+
 users.zip_code.duplicated().sum()
 
-# detect duplicate DataFrame rows: True if an entire row is identical to a previous row
 users.duplicated().tail()
 
-# examine the duplicate rows (ignoring the first occurrence)
+users.duplicated().sum()
+
 users.loc[users.duplicated(keep='first'), :]
 
-# examine the duplicate rows (ignoring the last occurrence)
 users.loc[users.duplicated(keep='last'), :]
 
-# examine the duplicate rows (including all duplicates)
 users.loc[users.duplicated(keep=False), :]
 
-# drop duplicated rows but keep the first occurrences
-users.drop_duplicates(keep='first').loc[60:70,:]      
+users.drop_duplicates(keep='first').shape
 
-# drop all duplicates first and last
+users.drop_duplicates(keep='first').loc[60:70,:]
+
+users.drop_duplicates(keep='last').shape
+
+users.drop_duplicates(keep='last').loc[60:70, :]
+
 users.drop_duplicates(keep=False).shape
 
-# only consider a subset of columns when identifying duplicates
 users.duplicated(subset=['age', 'zip_code']).sum()
 
-users.drop_duplicates(subset=['age', 'zip_code']).shape      
+print(users.duplicated('age').sum())
+users.drop_duplicates('age').shape
+
+print(users.duplicated('zip_code').sum())
+users.drop_duplicates('zip_code').shape
+
+users.drop_duplicates(subset=['age', 'zip_code']).shape
+     
 ```
 
 
