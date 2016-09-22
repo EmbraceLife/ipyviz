@@ -829,109 +829,362 @@ print(users.duplicated('zip_code').sum())
 users.drop_duplicates('zip_code').shape
 
 users.drop_duplicates(subset=['age', 'zip_code']).shape
-     
+
 ```
 
 
-[How to avoid a SettingWithCopyWarning in pandas?](http://localhost:8888/notebooks/scripts/How%20to%20avoid%20a%20SettingWithCopyWarning%20in%20pandas%3F.ipynb)
+[How to replace certain values in a dataframe to be np.nan ?](http://localhost:8888/notebooks/scripts/How%20to%20avoid%20a%20SettingWithCopyWarning%20in%20pandas%3F.ipynb)     
+[How to make a copy when create a new dataframe from a previous one?](http://localhost:8888/notebooks/scripts/How%20to%20avoid%20a%20SettingWithCopyWarning%20in%20pandas%3F.ipynb)     
 ```python
-# explicitly create a copy of 'movies'
+
+import pandas as pd
+
+movies = pd.read_csv('../data/imdb_1000.csv')
+
+movies.content_rating.isnull().sum()
+
+movies[movies.content_rating.isnull()]
+
+movies.content_rating.value_counts()
+
+movies[movies.content_rating=='NOT RATED'].head()
+
+movies[movies.content_rating=='NOT RATED'].content_rating.head()
+
+import numpy as np
+
+movies.loc[movies.content_rating=='NOT RATED', 'content_rating'] = np.nan
+movies.loc[[5,6,41,63,66],'content_rating']
+
+top_movies = movies.loc[movies.star_rating >= 9, :]
+top_movies.loc[0, 'duration'] = 150
+top_movies
+
 top_movies = movies.loc[movies.star_rating >= 9, :].copy()
 
-# pandas now knows that you are updating a copy instead of a view (does not cause a SettingWithCopyWarning)
 top_movies.loc[0, 'duration'] = 150
+top_movies
 ```
 
-[How to change display options in pandas?](http://localhost:8888/notebooks/scripts/How%20to%20change%20display%20options%20in%20pandas%3F.ipynb)
+[How to get, set and reset display options?](http://localhost:8888/notebooks/scripts/How%20to%20change%20display%20options%20in%20pandas%3F.ipynb)     
+[How to display with specific precions for numbers?](http://localhost:8888/notebooks/scripts/How%20to%20change%20display%20options%20in%20pandas%3F.ipynb)     
+[How to display thousands comma?](http://localhost:8888/notebooks/scripts/How%20to%20change%20display%20options%20in%20pandas%3F.ipynb)     
+
 ```python
-# overwrite the current setting so that more characters will be displayed
+
+import pandas as pd
+
+drinks = pd.read_csv('../data/drinks.csv')
+
+pd.get_option('display.max_rows')
+
+pd.set_option('display.max_rows', None)
+
+pd.reset_option('display.max_rows')
+
+pd.get_option('display.max_rows')
+
+pd.get_option('display.max_columns')
+
+train = pd.read_csv('../data/titanic_train.csv')
+
+pd.get_option('display.max_colwidth')
+
 pd.set_option('display.max_colwidth', 1000)
 
-# overwrite the 'precision' setting to display 2 digits after the decimal point of 'Fare'
 pd.set_option('display.precision', 2)
-train.head()
 
 drinks['x'] = drinks.wine_servings.astype("float64") * 1000
 drinks['y'] = drinks.total_litres_of_pure_alcohol * 1000
 
-# use a Python format string to specify a comma as the thousands separator
 pd.set_option('display.float_format', '{:,}'.format)
+
+drinks.dtypes
+
+pd.describe_option()
+pd.describe_option('rows')
+pd.reset_option('all')
 ```
 
-[How do I create a pandas DataFrame from another object?](http://localhost:8888/notebooks/scripts/How%20do%20I%20create%20a%20pandas%20DataFrame%20from%20another%20object%3F.ipynb)
+[How do I create a pandas DataFrame from another object?](http://localhost:8888/notebooks/scripts/How%20do%20I%20create%20a%20pandas%20DataFrame%20from%20another%20object%3F.ipynb)     
+[How to create dataframe from dictionary with or without a list of column names?](http://localhost:8888/notebooks/scripts/How%20do%20I%20create%20a%20pandas%20DataFrame%20from%20another%20object%3F.ipynb)     
+[How to create dataframe from a list of values and a list of column names?](http://localhost:8888/notebooks/scripts/How%20do%20I%20create%20a%20pandas%20DataFrame%20from%20another%20object%3F.ipynb)     
+[How to create dataframe from a random number array with a list of column names?](http://localhost:8888/notebooks/scripts/How%20do%20I%20create%20a%20pandas%20DataFrame%20from%20another%20object%3F.ipynb)     
+[How to use np.random.rand(), np.random.randint(), np.arange()?](http://localhost:8888/notebooks/scripts/How%20do%20I%20create%20a%20pandas%20DataFrame%20from%20another%20object%3F.ipynb)     
+[How to create a Series with value, index,  and column names ?](http://localhost:8888/notebooks/scripts/How%20do%20I%20create%20a%20pandas%20DataFrame%20from%20another%20object%3F.ipynb)     
 ```python
-# create a DataFrame from a dictionary (keys become column names, values become data)
+
+import pandas as pd
+
 pd.DataFrame({'id':[100, 101, 102], 'color':['red', 'blue', 'red']})
 
-# optionally specify the order of columns and define the index
 df = pd.DataFrame({'id':[100, 101, 102], 'color':['red', 'blue', 'red']}, columns=['id', 'color'], index=['a', 'b', 'c'])
 
-# create a DataFrame from a list of lists (each inner list becomes a row)
 pd.DataFrame([[100, 'red'], [101, 'blue'], [102, 'red']], columns=['id', 'color'])
 
-# create a NumPy array (with shape 4 by 2) and fill it with random numbers between 0 and 1
 import numpy as np
 arr = np.random.rand(4, 2)
-# create a DataFrame from the NumPy array
+
 pd.DataFrame(arr, columns=['one', 'two'])
 
-# create a DataFrame of student IDs (100 through 109) and test scores (random integers between 60 and 100)
 pd.DataFrame({'student':np.arange(100, 110, 1), 'test':np.random.randint(60, 101, 10)})
 
-# 'set_index' can be chained with the DataFrame constructor to select an index
 pd.DataFrame({'student':np.arange(100, 110, 1), 'test':np.random.randint(60, 101, 10)}).set_index('student')
 
-# create a new Series using the Series constructor
 s = pd.Series(['round', 'square'], index=['c', 'b'], name='shape')
 
-# concatenate the DataFrame and the Series (use axis=1 to concatenate columns)
 pd.concat([df, s], axis=1)
+pd.concat([s, df], axis=1)
 ```
 
-[How do I apply a function to a pandas Series or DataFrame?](http://localhost:8888/notebooks/scripts/How%20do%20I%20apply%20a%20function%20to%20a%20pandas%20Series%20or%20DataFrame%3F.ipynb)
+[How to use map() and apply() to apply functions to columns of a dataframe?]http://localhost:8888/notebooks/scripts/How%20do%20I%20apply%20a%20function%20to%20a%20pandas%20Series%20or%20DataFrame%3F.ipynb     
+[How to let apply() work with np.ceil, custom function, len(), lambda() to apply functions to columns of a dataframe?]http://localhost:8888/notebooks/scripts/How%20do%20I%20apply%20a%20function%20to%20a%20pandas%20Series%20or%20DataFrame%3F.ipynb     
+[How to use apply() and np.argmax to apply functions to columns of a dataframe?]http://localhost:8888/notebooks/scripts/How%20do%20I%20apply%20a%20function%20to%20a%20pandas%20Series%20or%20DataFrame%3F.ipynb    
+[How to change specific columns' type at once ?]http://localhost:8888/notebooks/scripts/How%20do%20I%20apply%20a%20function%20to%20a%20pandas%20Series%20or%20DataFrame%3F.ipynb     
+
+
 ```python
-# map 'female' to 0 and 'male' to 1
+
+import pandas as pd
+
+train = pd.read_csv('../data/titanic_train.csv')
+
 train['Sex_num'] = train.Sex.map({'female':0, 'male':1})
+
 train.loc[0:4, ['Sex', 'Sex_num']]
 
-# calculate the length of each string in the 'Name' Series
 train['Name_length'] = train.Name.apply(len)
+
 train.loc[0:4, ['Name', 'Name_length']]
 
-# round up each element in the 'Fare' Series to the next integer
 import numpy as np
+
 train['Fare_ceil'] = train.Fare.apply(np.ceil)
 train.loc[0:4, ['Fare', 'Fare_ceil']]
 
-# use a string method to split the 'Name' Series at commas (returns a Series of lists)
 train.Name.str.split(',').head()
 
-# define a function that returns an element from a list based on position
+
 def get_element(my_list, position):
     return my_list[position]
 
-# apply the 'get_element' function and pass 'position' as a keyword argument
 train.Name.str.split(',').apply(get_element, position=0).head()
 
-# alternatively, use a lambda function
 train.Name.str.split(',').apply(lambda x: x[0]).head()
 
-# apply the 'max' function along axis 0 to calculate the maximum value in each column
+drinks = pd.read_csv('../data/drinks.csv')
+
+drinks.loc[:, 'beer_servings':'wine_servings'].head()
+
 drinks.loc[:, 'beer_servings':'wine_servings'].apply(max, axis=0)
 
-# apply the 'max' function along axis 1 to calculate the maximum value in each row
 drinks.loc[:, 'beer_servings':'wine_servings'].apply(max, axis=1).head()
 
-# use 'np.argmax' to calculate which column has the maximum value for each row
 drinks.loc[:, 'beer_servings':'wine_servings'].apply(np.argmax, axis=1).head()
 
-# convert every DataFrame element into a float
 drinks.loc[:, 'beer_servings':'wine_servings'].applymap(float).head()
 
-# overwrite the existing DataFrame columns
 drinks.loc[:, 'beer_servings':'wine_servings'] = drinks.loc[:, 'beer_servings':'wine_servings'].applymap(float)
-drinks.head()
 ```
 
 
-[How to make use of round in pandas for dataframe?](http://localhost:8888/notebooks/scripts/use%20of%20round.ipynb)
+[How to round for the whole dataframe?](http://localhost:8888/notebooks/scripts/use%20of%20round.ipynb)    
+[How to round for specific columns of the whole dataframe?](http://localhost:8888/notebooks/scripts/use%20of%20round.ipynb)    
+[How to round for specific columns with specific round args for the whole dataframe?](http://localhost:8888/notebooks/scripts/use%20of%20round.ipynb)    
+```python
+
+import pandas as pd
+import numpy as np
+
+df = pd.DataFrame(np.random.random([3, 3]),
+     columns=['A', 'B', 'C'], index=['first', 'second', 'third'])
+
+df.round(2)
+
+df.round({'A': 1, 'C': 2})
+
+decimals = pd.Series([1, 0, 2], index=['A', 'B', 'C'])
+
+df.round(decimals)
+```
+
+
+[How pd.Series work with `endwith()` and `for in` loop?](http://localhost:8888/notebooks/scripts/pandas%20Series%20and%20DataFrame.ipynb)    
+[How to create index name and series name when creating a pd.Series?](http://localhost:8888/notebooks/scripts/pandas%20Series%20and%20DataFrame.ipynb)    
+[How to create a pd.Series from a dictionary?](http://localhost:8888/notebooks/scripts/pandas%20Series%20and%20DataFrame.ipynb)    
+```python
+
+import pandas as pd
+import numpy as np
+
+counts = pd.Series([632, 1638, 569, 115])
+counts
+
+counts.values
+
+counts.index
+
+bacteria = pd.Series([632, 1638, 569, 115],
+    index=['Firmicutes', 'Proteobacteria', 'Actinobacteria', 'Bacteroidetes'])
+
+bacteria['Actinobacteria']
+
+bacteria[[name.endswith('bacteria') for name in bacteria.index]]
+
+[name.endswith('bacteria') for name in bacteria.index]
+
+bacteria[0]
+
+bacteria.name = 'counts'
+bacteria.index.name = 'phylum'
+
+np.log(bacteria)
+
+bacteria[bacteria>1000]
+
+bacteria_dict = {'Firmicutes': 632, 'Proteobacteria': 1638, 'Actinobacteria': 569,
+                 'Bacteroidetes': 115}
+bacteria = pd.Series(bacteria_dict)
+bacteria
+
+
+bacteria2 = pd.Series(bacteria_dict,
+                      index=['Cyanobacteria','Firmicutes',
+                             'Proteobacteria','Actinobacteria'])
+
+bacteria2
+
+bacteria2.isnull()
+
+bacteria + bacteria2
+```
+
+[How to merge and concat on dataframe?](http://localhost:8888/notebooks/scripts/merge%2C%20concat.ipynb)     
+[How to do union join, inner join and left join, right join between two dataframe?](http://localhost:8888/notebooks/scripts/merge%2C%20concat.ipynb)    
+[How to do row bind and column bind without sharing any column?](http://localhost:8888/notebooks/scripts/merge%2C%20concat.ipynb)
+```python
+import pandas as pd
+import numpy as np
+
+left_frame = pd.DataFrame({'key': range(5),
+                           'left_value': ['a', 'b', 'c', 'd', 'e']})
+right_frame = pd.DataFrame({'key': range(2, 7),
+                           'right_value': ['f', 'g', 'h', 'i', 'j']})
+print(left_frame)
+print('\n')
+print(right_frame)
+
+pd.merge(left_frame, right_frame, on='key', how='inner')
+
+pd.merge(left_frame, right_frame, on='key', how='left')
+
+pd.merge(left_frame, right_frame, on='key', how='right')
+
+pd.merge(left_frame, right_frame, on='key', how='outer')
+
+pd.concat([left_frame, right_frame])
+
+pd.concat([left_frame, right_frame], axis=1)
+```
+
+[How to use read_csv with encoding = 'latin-1'?](http://localhost:8888/notebooks/scripts/Greg%20Reda%202.ipynb)    
+[How to the first 5 columns to load when reading a datafile?](http://localhost:8888/notebooks/scripts/Greg%20Reda%202.ipynb)    
+[How to read the first few lines of any data file?](http://localhost:8888/notebooks/scripts/Greg%20Reda%202.ipynb)      
+[How to count values in each column after groupby?](http://localhost:8888/notebooks/scripts/Greg%20Reda%202.ipynb)      
+[How to count total values in each group after groupby?](http://localhost:8888/notebooks/scripts/Greg%20Reda%202.ipynb)      
+[How to apply sum, mean, median to each group after groupby?](http://localhost:8888/notebooks/scripts/Greg%20Reda%202.ipynb)      
+[How to create a ranker column for each group after groupby?](http://localhost:8888/notebooks/scripts/Greg%20Reda%202.ipynb)      
+[How to access a group subdataset after groupby?](http://localhost:8888/notebooks/scripts/Greg%20Reda%202.ipynb)      
+
+
+
+```python
+
+import pandas as pd
+import numpy as np
+from IPython.display import display
+
+u_cols = ['user_id', 'age', 'sex', 'occupation', 'zip_code']
+users = pd.read_csv('../data/ml-100k/u.user', sep='|', names=u_cols,
+                    encoding='latin-1')
+
+users.head()
+
+r_cols = ['user_id', 'movie_id', 'rating', 'unix_timestamp']
+ratings = pd.read_csv('../data/ml-100k/u.data', sep='\t', names=r_cols,
+                      encoding='latin-1')
+
+ratings.head()
+
+m_cols = ['movie_id', 'title', 'release_date', 'video_release_date', 'imdb_url']
+movies = pd.read_csv('../data/ml-100k/u.item', sep='|', names=m_cols, usecols=range(5),
+                     encoding='latin-1')
+
+movies.head()
+
+get_ipython().system(u'head -n 3 ../data/city-of-chicago-salaries.csv')
+
+headers = ['name', 'title', 'department', 'salary']
+chicago = pd.read_csv('../data/city-of-chicago-salaries.csv',
+                      header=0,
+                      names=headers,
+                      converters={'salary': lambda x: float(x.replace('$', ''))})
+chicago.head()
+
+chicago.shape
+
+from IPython.display import display
+
+by_dept = chicago.groupby('department')
+by_dept
+
+print(by_dept.count().head()) # NOT NULL records within each column
+print('\n')
+print(by_dept.size().tail()) # total records for each department
+
+print(by_dept.sum()[20:25]) # total salaries of each department
+print('\n')
+print(by_dept.mean()[20:25]) # average salary of each department
+print('\n')
+print(by_dept.median()[20:25]) # take that, RDBMS!
+
+by_dept.title.nunique()
+
+by_dept.title.nunique().sort_values(ascending=False)[:5]
+
+def ranker(df):
+    """Assigns a rank to each employee based on salary, with 1 being the highest paid.
+    Assumes the data is DESC sorted."""
+    df['dept_rank'] = np.arange(len(df)) + 1
+    return df
+
+chicago.shape
+
+chicago.department.nunique()
+
+len(by_dept)
+
+chicago.sort_values('salary', ascending=False, inplace=True)
+
+chicago.head()
+
+chicago_ranker = chicago.groupby('department').apply(ranker)
+
+chicago_ranker.shape
+
+chicago_ranker.head()
+
+display(chicago_ranker[chicago_ranker.dept_rank == 1].head(14))
+
+chicago[chicago.department == "LAW"][:5]
+```
+
+
+[How to use pd.merge (by default) to join two dataframe sharing one column with different total length?](http://localhost:8888/notebooks/scripts/Greg%20Reda%203.ipynb)    
+[How to apply two statistical methods (np.size, np.mean) on to a particular column of each group ?](http://localhost:8888/notebooks/scripts/Greg%20Reda%203.ipynb)    
+[How to sort the grouped dataset by mean value column under over arch rating column?](http://localhost:8888/notebooks/scripts/Greg%20Reda%203.ipynb)    
+[How to access each big arch column's smaller column?](http://localhost:8888/notebooks/scripts/Greg%20Reda%203.ipynb)    
+[How to create range category for another column of the same dataframe?](http://localhost:8888/notebooks/scripts/Greg%20Reda%203.ipynb)    
+[How to drop duplicates when two specific columns both have duplicates at the same time and make latter part of duplicates to be dropped?](http://localhost:8888/notebooks/scripts/Greg%20Reda%203.ipynb)    
+[How to convert group by group stacked dataframe to unstack table  format?](http://localhost:8888/notebooks/scripts/Greg%20Reda%203.ipynb)    
+[How to use pivot table?](http://localhost:8888/notebooks/scripts/Greg%20Reda%203.ipynb)    
