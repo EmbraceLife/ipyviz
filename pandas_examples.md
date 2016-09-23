@@ -1188,3 +1188,132 @@ chicago[chicago.department == "LAW"][:5]
 [How to drop duplicates when two specific columns both have duplicates at the same time and make latter part of duplicates to be dropped?](http://localhost:8888/notebooks/scripts/Greg%20Reda%203.ipynb)    
 [How to convert group by group stacked dataframe to unstack table  format?](http://localhost:8888/notebooks/scripts/Greg%20Reda%203.ipynb)    
 [How to use pivot table?](http://localhost:8888/notebooks/scripts/Greg%20Reda%203.ipynb)    
+
+```python
+
+import pandas as pd
+import numpy as np
+from IPython.display import display
+
+u_cols = ['user_id', 'age', 'sex', 'occupation', 'zip_code']
+users = pd.read_csv('../data/ml-100k/u.user', sep='|', names=u_cols,
+                    encoding='latin-1')
+
+users.head()
+
+
+r_cols = ['user_id', 'movie_id', 'rating', 'unix_timestamp']
+ratings = pd.read_csv('../data/ml-100k/u.data', sep='\t', names=r_cols,
+                      encoding='latin-1')
+ratings.shape
+
+
+ratings.movie_id.nunique()
+
+ratings.loc[ratings.movie_id == 1, :].head()
+
+m_cols = ['movie_id', 'title', 'release_date', 'video_release_date', 'imdb_url']
+movies = pd.read_csv('../data/ml-100k/u.item', sep='|', names=m_cols, usecols=range(5),
+                     encoding='latin-1')
+
+display(movies.shape)
+display(movies.movie_id.nunique())
+
+movies.loc[movies.movie_id == 1, :].head()
+
+movie_ratings = pd.merge(movies, ratings)
+movie_ratings.shape
+
+movie_ratings.head()
+
+lens = pd.merge(movie_ratings, users)
+
+lens.groupby('title').size()
+
+most_rated = lens.groupby('title').size().sort_values(ascending=False)[:25]
+display(most_rated)
+
+lens.title.value_counts()[:25]
+
+movie_stats = lens.groupby('title').agg({'rating': [np.size, np.mean]})
+movie_stats.tail()
+
+
+movie_stats.sort_values([('rating', 'mean')], ascending=False).head()
+
+atleast_100 = movie_stats['rating']['size'] >= 100
+
+movie_stats[atleast_100].sort_values([('rating', 'mean')], ascending=False)[:15]
+
+most_50 = lens.groupby('movie_id').size().sort_values(ascending=False)[:50]
+
+display(most_50)
+
+get_ipython().magic(u'matplotlib inline')
+import matplotlib.pyplot as plt
+
+users.age.plot.hist(bins=30)
+plt.title("Distribution of users' ages")
+plt.ylabel('count of users')
+plt.xlabel('age');
+
+
+
+labels = ['0-9', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79']
+# right = True, meaning include the most right value; false, meaning exclude it
+lens['age_group'] = pd.cut(lens.age, range(0, 81, 10), right=False, labels=labels)
+
+
+# default drop_duplicates() used when both columns are duplicated
+lens[['age', 'age_group']].drop_duplicates()[:10]
+
+lens.groupby('age_group').agg({'rating': [np.size, np.mean]})
+
+lens.set_index('movie_id', inplace=True)
+
+by_age = lens.loc[most_50.index].groupby(['title', 'age_group'])
+by_age.rating.mean().head(15)
+
+by_age.rating.mean()
+
+by_age.rating.mean().unstack(1).fillna(0)[10:20]
+
+lens.reset_index('movie_id', inplace=True)
+
+pivoted = lens.pivot_table(index=['movie_id', 'title'],
+                           columns=['sex'],
+                           values='rating',
+                           fill_value=0)
+pivoted.head()
+
+pivoted['diff'] = pivoted.M - pivoted.F
+pivoted.head()
+```
+
+
+[How to draw a line based on a single pd.Series with/without grid?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)    
+[How to do cumsum() on a single pd.Series?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)    
+[How to draw 3-line chart based on a 3-column dataframe?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)    
+[How to create a 3-column dataframe with random distributions like normal, poisson, gamma?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)    
+[How to create 3-lines in 3-charts grouped vertically based on 3-column dataframe?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)    
+[How to create 3-lines in 3-charts grouped vertically based on 3-column dataframe, while give a particular column a different y-axis  y2-axis?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)    
+[How to create 3-lines in 3-charts grouped horizontally based on 3-column dataframe using subplots() and enumerate()?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)    
+[How to read xls data file?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)    
+[How to group a dataframe and display several first and last rows of each group in the dataframe?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)    
+[How to create a bar chart out of a grouped dataframe with sum() or mean() applied to each group?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)    
+[How to create a horizontal barchart for a 2-grouped dataframe applied sum() to each group on a different column?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)    
+[How to create a vertical stacked barchart for a 2-grouped columns crosstab() with a different column from the same dataframe?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)    
+[How to create a histogram based on a pd.Series](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)    
+[How to create a histogram with specific number of bins?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)    
+[How to drop na from a pd.Series?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)    
+[How to find proper number of bins using kurtosis()?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)    
+[How to create density curve and set xlim?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)    
+[How to plot histogram and density curve in the same chart?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)    
+[How to create boxplot with a column of dataframe and divided into smaller groups by another column](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)    
+[How to plot boxplot and jitter scatterpoints on the same chart?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)    
+[How to create scatter points using pd.Series in a dataframe and set x-y-lim?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)
+```python
+# 1 refers to sum by columns
+# 0 refers to sum by rows
+death_counts.sum(1).astype(float)
+```
