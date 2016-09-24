@@ -1311,7 +1311,13 @@ pivoted.head()
 [How to plot histogram and density curve in the same chart?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)    
 [How to create boxplot with a column of dataframe and divided into smaller groups by another column](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)    
 [How to plot boxplot and jitter scatterpoints on the same chart?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)    
-[How to create scatter points using pd.Series in a dataframe and set x-y-lim?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)
+[How to create scatter points using pd.Series in a dataframe and set x-y-lim, size and alpha?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)     
+[How to create scatters with a Series of number for colors using c and cmap args?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)     
+[How to create scatter matrix and make diagonal to be density curve?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)    
+[How to create plots with ggplot style?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)     
+[How to create facetgrid() to display density curves which are grouped by two columns?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)   
+[How to create FacetGrid by 2 columns, and plot scatters using another two columns?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)   
+[How regplot can add regression curve to scatter points in FacetGrid groups?](http://localhost:8888/notebooks/scripts/Plotting-with-Pandas.ipynb)   
 ```python
 # 1 refers to sum by columns
 # 0 refers to sum by rows
