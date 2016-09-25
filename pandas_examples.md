@@ -1323,3 +1323,16 @@ pivoted.head()
 # 0 refers to sum by rows
 death_counts.sum(1).astype(float)
 ```
+
+
+[How to find intersection between two pd.Series, especially with Chinese characters?](https://uqer.io/labs/notebooks/%E5%A6%82%E4%BD%95%E6%89%BE%E5%87%BA%E6%89%80%E6%9C%89%E8%82%A1%E7%A5%A8%E6%89%80%E5%B1%9E%E8%A1%8C%E4%B8%9A%EF%BC%9F.nb)
+```python
+# industry2 and industry3 are pd.Series
+pd.Series(list(set(industry2) & set(industry3)))
+```
+
+[How to display all the rows and all the texts inside a cell?](https://uqer.io/labs/notebooks/%E5%A6%82%E4%BD%95%E6%9F%A5%E6%89%BE%E4%B8%8A%E5%B8%82%E5%85%AC%E5%8F%B8%E7%9A%84%E7%BB%8F%E8%90%A5%E8%8C%83%E5%9B%B4%EF%BC%9F.nb)     
+```python
+pd.set_option('display.max_rows', 150)
+pd.set_option('display.max_colwidth', 1000)
+```

@@ -1,4 +1,28 @@
-# projects
+# 摸索如何使用优矿数据
 
-## BYD analysis
-[change of shares on BYD](http://localhost:8888/notebooks/scripts/Change%20of%20Shares%20of%20BYD.ipynb)
+## 如何使用＊＊＊＊数据
+[股票基本信息API](https://uqer.io/data/search/%E8%82%A1%E7%A5%A8%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF)     
+[如何查找上市公司的经营范围?](https://uqer.io/labs/notebooks/%E5%A6%82%E4%BD%95%E6%9F%A5%E6%89%BE%E4%B8%8A%E5%B8%82%E5%85%AC%E5%8F%B8%E7%9A%84%E7%BB%8F%E8%90%A5%E8%8C%83%E5%9B%B4%EF%BC%9F.nb)     
+#### 尝试解决的问题：
+1. 查找所有A股中包括退市和未上市的股票
+2. 查找A股所有可交易和暂停交易的股票总数
+3. 调取所有以上股票背后公司的经营范围
+4. 去除所有经营范围含有NaN的股票
+5. 找出所有含‘新能源’字样的经营范围的股票
+6. 看看比亚迪的经营范围说了些什么？
+7. 看看所有从事与‘车’有关行业的上市公司的经营范围
+
+## 如何使用**股票行业分类**数据
+[股票行业分类API](https://uqer.io/data/search/%E8%82%A1%E7%A5%A8%E8%A1%8C%E4%B8%9A%E5%88%86%E7%B1%BB)    
+[如何在上市公司与行业名称之间搜索？](https://uqer.io/labs/notebooks/%E5%A6%82%E4%BD%95%E5%9C%A8%E4%B8%8A%E5%B8%82%E5%85%AC%E5%8F%B8%E4%B8%8E%E8%A1%8C%E4%B8%9A%E5%90%8D%E7%A7%B0%E4%B9%8B%E9%97%B4%E6%90%9C%E7%B4%A2.nb)    
+[Open it on locally](http://localhost:8888/notebooks/scripts/%E5%A6%82%E4%BD%95%E5%9C%A8%E4%B8%8A%E5%B8%82%E5%85%AC%E5%8F%B8%E4%B8%8E%E8%A1%8C%E4%B8%9A%E5%90%8D%E7%A7%B0%E4%B9%8B%E9%97%B4%E6%90%9C%E7%B4%A2.ipynb)    
+#### 尝试解决的问题：
+1. 当下所有未退市的公司 （包括上市但暂停交易的公司）
+2. 所有未退市公司的名称，编码和所在各级行业名称
+3. 调取所有股票的申万行业名称，并去除重复内容
+4. 调取申万行业一级目录
+5. 调取申万行业二级目录
+6. 调取申万行业三级目录
+7. 展示申万行业三级目录所有明细
+8. 找出行业名称中包含‘车’的所有上市公司及3级行业具体名称
+9. 找出某个行业下的所有上市公司
