@@ -1322,6 +1322,326 @@ pivoted.head()
 # 1 refers to sum by columns
 # 0 refers to sum by rows
 death_counts.sum(1).astype(float)
+
+
+get_ipython().magic(u'matplotlib inline')
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from IPython.display import display
+import matplotlib
+matplotlib.style.use('ggplot')
+
+pd.set_option('display.max_columns', 20)
+pd.set_option('display.max_rows', 25)
+
+
+normals = pd.Series(np.random.normal(size=10))
+normals.plot(grid=True)
+
+normals.cumsum().plot(grid=True)
+
+variables = pd.DataFrame({'normal': np.random.normal(size=100),
+                       'gamma': np.random.gamma(1, size=100),
+                       'poisson': np.random.poisson(size=100)})
+
+# 0 refers to rows
+variables.cumsum(0).plot()
+
+variables.cumsum(0).plot(subplots=True, grid=True)
+
+variables.cumsum(0).plot(secondary_y='normal', grid=False)
+
+fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(12, 4))
+for i,var in enumerate(['normal','gamma','poisson']):
+    variables[var].cumsum(0).plot(ax=axes[i], title=var)
+
+axes[0].set_ylabel('cumulative sum')
+
+titanic = pd.read_excel("../data/titanic.xls", "titanic")
+titanic.head()
+
+titanic.groupby('pclass').survived.sum().plot(kind='bar')
+
+titanic.groupby(['sex','pclass']).survived.sum().plot(kind='barh')
+
+death_counts = pd.crosstab([titanic.pclass, titanic.sex], titanic.survived.astype(bool))
+
+death_counts
+
+death_counts.plot(kind='bar', stacked=True, color=['black','gold'], grid=False)
+
+pd.Series(death_counts.sum(1).astype(float).values)
+
+type(death_counts)
+death_counts.sum(1).astype(float)
+
+death_counts.div(death_counts.sum(1).astype(float), axis=0)
+
+death_counts.div(death_counts.sum(1).astype(float), axis=0).plot(kind='barh', stacked=True, color=['black','gold'])
+titanic.fare.shape
+
+
+# In[63]:
+
+# How to create a histogram based on a pd.Series
+titanic.fare.hist(grid=False)
+
+
+# The `hist` method puts the continuous fare values into **bins**, trying to make a sensible décision about how many bins to use (or equivalently, how wide the bins are). We can override the default value (10):
+
+# In[64]:
+
+# How to create a histogram with specific number of bins?
+titanic.fare.hist(bins=30)
+
+
+# There are algorithms for determining an "optimal" number of bins, each of which varies somehow with the number of observations in the data series.
+
+# In[65]:
+
+n = len(titanic)
+n
+
+
+# In[66]:
+
+sturges = lambda n: int(np.log2(n) + 1)
+sturges(n)
+
+
+# In[67]:
+
+square_root = lambda n: int(np.sqrt(n))
+square_root(n)
+
+
+# In[68]:
+
+# How to drop na from a pd.Series?
+display(titanic.fare.shape)
+titanic.fare.dropna().shape
+display(kurtosis(titanic.fare.dropna()))
+
+
+# In[69]:
+
+from scipy.stats import kurtosis
+doanes = lambda data: int(1 + np.log(len(data)) + np.log(1 + kurtosis(data) * (len(data) / 6.) ** 0.5))
+doanes(titanic.fare.dropna())
+
+
+# In[70]:
+
+# How to find proper number of bins using kurtosis()?
+titanic.fare.hist(bins=doanes(titanic.fare.dropna()))
+
+
+# A **density plot** is similar to a histogram in that it describes the distribution of the underlying data, but rather than being a pure empirical representation, it is an *estimate* of the underlying "true" distribution. As a result, it is smoothed into a continuous line plot. We create them in Pandas using the `plot` method with `kind='kde'`, where `kde` stands for **kernel density estimate**.
+
+# In[71]:
+
+# How to create density curve and set xlim?
+titanic.fare.dropna().plot(kind='kde', xlim=(0,600), grid=True)
+
+
+# Often, histograms and density plots are shown together:
+
+# In[72]:
+
+# How to plot histogram and density curve in the same chart?
+titanic.fare.hist(bins=doanes(titanic.fare.dropna()), normed=True, color='lightseagreen')
+titanic.fare.dropna().plot(kind='kde', xlim=(0,600), style='r--')
+
+
+# Here, we had to normalize the histogram (`normed=True`), since the kernel density is normalized by definition (it is a probability distribution).
+
+# We will explore kernel density estimates more in the next section.
+
+# ## Boxplots
+#
+# A different way of visualizing the distribution of data is the boxplot, which is a display of common quantiles; these are typically the quartiles and the lower and upper 5 percent values.
+
+# In[73]:
+
+# How to create boxplot with a column of dataframe and divided into smaller groups by another column
+titanic.boxplot(column='fare', by='pclass', grid=False)
+
+
+# You can think of the box plot as viewing the distribution from above. The blue crosses are "outlier" points that occur outside the extreme quantiles.
+
+# One way to add additional information to a boxplot is to overlay the actual data; this is generally most suitable with small- or moderate-sized data series.
+
+# In[74]:
+
+# How to plot boxplot and jitter scatterpoints on the same chart?
+bp = titanic.boxplot(column='age', by='pclass', grid=False)
+for i in [1,2,3]:
+    y = titanic.age[titanic.pclass==i].dropna()
+    # Add some random "jitter" to the x-axis
+    x = np.random.normal(i, 0.04, size=len(y))
+    plt.plot(x, y.values, 'r.', alpha=0.2)
+
+
+# When data are dense, a couple of tricks used above help the visualization:
+#
+# 1. reducing the alpha level to make the points partially transparent
+# 2. adding random "jitter" along the x-axis to avoid overstriking
+
+# ### Exercise
+#
+# Using the Titanic data, create kernel density estimate plots of the age distributions of survivors and victims.
+
+# In[ ]:
+
+
+
+
+# ## Scatterplots
+#
+# To look at how Pandas does scatterplots, let's reload the baseball sample dataset.
+
+# In[75]:
+
+baseball = pd.read_csv("../data/baseball.csv")
+baseball.head()
+
+
+# Scatterplots are useful for data exploration, where we seek to uncover relationships among variables. There are no scatterplot methods for Series or DataFrame objects; we must instead use the matplotlib function `scatter`.
+
+# In[76]:
+
+# How to create scatter points using pd.Series in a dataframe and set x-y-lim?
+plt.scatter(baseball.ab, baseball.h)
+plt.xlim(0, 700); plt.ylim(0, 200)
+
+
+# We can add additional information to scatterplots by assigning variables to either the size of the symbols or their colors.
+
+# In[77]:
+
+plt.scatter(baseball.ab, baseball.h, s=baseball.hr*10, alpha=0.5)
+plt.xlim(0, 700); plt.ylim(0, 200)
+
+
+# In[78]:
+
+display(baseball.hr.nunique())
+baseball.hr.head(20)
+
+
+# In[79]:
+
+# How to create scatters with a Series of number for colors using c and cmap args?
+plt.scatter(baseball.ab, baseball.h, c=baseball.hr, s=40, cmap='Accent')
+plt.xlim(0, 700); plt.ylim(0, 200);
+
+
+# To view scatterplots of a large numbers of variables simultaneously, we can use the `scatter_matrix` function that was recently added to Pandas. It generates a matrix of pair-wise scatterplots, optiorally with histograms or kernel density estimates on the diagonal.
+
+# In[80]:
+
+# How to create scatter matrix and make diagnal to be density curve?
+_ = pd.scatter_matrix(baseball.loc[:,'r':'sb'], figsize=(12,8), diagonal='kde')
+
+
+# ## Trellis Plots
+#
+# One of the enduring strengths of carrying out statistical analyses in the R language is the quality of its graphics. In particular, the addition of [Hadley Wickham's ggplot2 package](http://ggplot2.org) allows for flexible yet user-friendly generation of publication-quality plots. Its srength is based on its implementation of a powerful model of graphics, called the [Grammar of Graphics](http://vita.had.co.nz/papers/layered-grammar.pdf) (GofG). The GofG is essentially a theory of scientific graphics that allows the components of a graphic to be completely described. ggplot2 uses this description to build the graphic component-wise, by adding various layers.
+#
+# Pandas recently added functions for generating graphics using a GofG approach. Chiefly, this allows for the easy creation of **trellis plots**, which are a faceted graphic that shows relationships between two variables, conditioned on particular values of other variables.
+#
+# **This allows for the representation of more than two dimensions of information without having to resort to 3-D graphics, etc.**
+#
+
+# Let's use the `titanic` dataset to create a trellis plot that **represents 4 variables** at a time. This consists of 4 steps:
+#
+# 1. Create a `RPlot` object that merely relates two variables in the dataset
+# 2. Add a grid that will be used to condition the variables by both passenger class and sex
+# 3. Add the actual plot that will be used to visualize each comparison
+# 4. Draw the visualization
+
+# ###  Examples of using Seaborn for Trellis Plots
+
+# In[91]:
+
+tips_data = pd.read_csv('../data/tips.csv')
+tips_data.head()
+
+
+# In[86]:
+
+import pandas.tools.rplot as rplot
+plt.figure()
+
+
+# In[87]:
+
+# 2 variables used by Rplot()
+plot = rplot.RPlot(tips_data, x='total_bill', y='tip')
+plot
+
+
+# In[88]:
+
+# another two variables are used by rplot()
+plot.add(rplot.TrellisGrid(['sex', 'smoker']))
+
+
+# In[89]:
+
+# give it a geohistogram method
+plot.add(rplot.GeomHistogram())
+
+
+# In[90]:
+
+plot.render(plt.gcf())
+
+
+# In[92]:
+
+import seaborn as sns
+g = sns.FacetGrid(tips_data, row="sex", col="smoker")
+g.map(plt.hist, "total_bill")
+
+
+# In[93]:
+
+g = sns.FacetGrid(tips_data, row="sex", col="smoker")
+g.map(sns.kdeplot, "total_bill")
+
+
+# In[97]:
+
+titanic = titanic[titanic.age.notnull() & titanic.fare.notnull()]
+titanic.columns
+
+
+# In[98]:
+
+g = sns.FacetGrid(titanic, row="pclass", col="sex")
+g.map(sns.kdeplot, "age") # a column of values
+
+g = sns.FacetGrid(tips_data, row="sex", col="smoker")
+g.map(plt.scatter, "total_bill", "tip")
+
+g = sns.FacetGrid(tips_data, row="sex", col="smoker", margin_titles=True)
+g.map(sns.regplot, "total_bill", "tip", order=2)
+
+
+# In[101]:
+
+g = sns.FacetGrid(tips_data, row="sex", col="smoker")
+g.map(plt.scatter, "total_bill", "tip")
+
+# How to use sns.kdeplot to create geo map?
+g.map(sns.kdeplot, "total_bill", "tip")
+
+# add different colors using hue arg
+g = sns.FacetGrid(tips_data, row="sex", col="smoker", hue="day")
+g.map(plt.scatter, "tip", "total_bill")
+g.add_legend()
 ```
 
 
@@ -1335,4 +1655,101 @@ pd.Series(list(set(industry2) & set(industry3)))
 ```python
 pd.set_option('display.max_rows', 150)
 pd.set_option('display.max_colwidth', 1000)
+```
+
+[how to reverse a dataframe?](https://uqer.io/labs/notebooks/%E7%9C%8B%E7%9C%8B%E8%BF%87%E5%8E%BB%E5%8D%81%E5%B9%B4%E5%90%84%E5%9B%BD%E8%B4%A7%E5%B8%81%E4%BE%9B%E5%BA%94%E6%83%85%E5%86%B5.nb)
+```python
+data_ordered = data.sort_index(axis=0 ,ascending=False)
+```
+
+[How to convert a date in string to date in date class](https://uqer.io/labs/notebooks/%E7%9C%8B%E7%9C%8B%E8%BF%87%E5%8E%BB%E5%8D%81%E5%B9%B4%E5%90%84%E5%9B%BD%E8%B4%A7%E5%B8%81%E4%BE%9B%E5%BA%94%E6%83%85%E5%86%B5.nb)
+```python
+data['date'] = pd.to_datetime(data.periodDate)
+```
+
+[How to set date column to be index column in order to draw a line with date on axis](https://uqer.io/labs/notebooks/%E7%9C%8B%E7%9C%8B%E8%BF%87%E5%8E%BB%E5%8D%81%E5%B9%B4%E5%90%84%E5%9B%BD%E8%B4%A7%E5%B8%81%E4%BE%9B%E5%BA%94%E6%83%85%E5%86%B5.nb)     
+```python
+data.set_index('date', inplace=True)
+data_ordered.totalValue.plot()
+```
+
+[How to slice a number of rows of a dataframe by date as index?](https://uqer.io/labs/notebooks/%E7%9C%8B%E7%9C%8B%E8%BF%87%E5%8E%BB%E5%8D%81%E5%B9%B4%E5%90%84%E5%9B%BD%E8%B4%A7%E5%B8%81%E4%BE%9B%E5%BA%94%E6%83%85%E5%86%B5.nb)
+```python
+data_ordered.loc[data_ordered.index>pd.to_datetime('20060101'), 'totalValue']
+
+data_ordered.loc[data_ordered.index>'20060101', 'totalValue']
+```
+
+
+[How to access a particular date or row of a dataframe by date as index?](https://uqer.io/labs/notebooks/%E7%9C%8B%E7%9C%8B%E8%BF%87%E5%8E%BB%E5%8D%81%E5%B9%B4%E5%90%84%E5%9B%BD%E8%B4%A7%E5%B8%81%E4%BE%9B%E5%BA%94%E6%83%85%E5%86%B5.nb)      
+```python
+data_ordered.loc[pd.to_datetime('20060131')].totalValue
+data_ordered.loc['20060131'].totalValue
+```
+
+
+
+[How to reverse a dataframe using `sort_index()` and `iloc[::-1]`?](https://uqer.io/labs/notebooks/%E7%9C%8B%E7%9C%8B%E8%BF%87%E5%8E%BB%E5%8D%81%E5%B9%B4%E5%90%84%E5%9B%BD%E8%B4%A7%E5%B8%81%E4%BE%9B%E5%BA%94%E6%83%85%E5%86%B5.nb)     
+```python
+# M2_US_sin2006.sort_index(axis = 0, ascending=True, inplace=True)
+# if one is not working, try another method
+M2_US_sin2006 = M2_US_sin2006.iloc[::-1]
+```
+
+
+[How to draw 4 different time series on the same chart?](https://uqer.io/labs/notebooks/%E7%9C%8B%E7%9C%8B%E8%BF%87%E5%8E%BB%E5%8D%81%E5%B9%B4%E5%90%84%E5%9B%BD%E8%B4%A7%E5%B8%81%E4%BE%9B%E5%BA%94%E6%83%85%E5%86%B5.nb)     
+[How to set the size of the figure of plotting?](https://uqer.io/labs/notebooks/%E7%9C%8B%E7%9C%8B%E8%BF%87%E5%8E%BB%E5%8D%81%E5%B9%B4%E5%90%84%E5%9B%BD%E8%B4%A7%E5%B8%81%E4%BE%9B%E5%BA%94%E6%83%85%E5%86%B5.nb)     
+[How to set up title, xlabel, ylabel, legend?](https://uqer.io/labs/notebooks/%E7%9C%8B%E7%9C%8B%E8%BF%87%E5%8E%BB%E5%8D%81%E5%B9%B4%E5%90%84%E5%9B%BD%E8%B4%A7%E5%B8%81%E4%BE%9B%E5%BA%94%E6%83%85%E5%86%B5.nb)     
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(10, 5))
+
+plt.plot(m2_japan.dataValue/m2_japan.dataValue[0], label='Japan')
+plt.plot(M2_US_sin2006.dataValue/(M2_US_sin2006.loc['20060131'].dataValue), label = 'US')
+plt.plot(m2_german/m2_german[0],  label = 'Germany')
+plt.plot(dataSince2006/dataSince2006[0],  label = 'China')
+plt.legend(loc='upper left')
+plt.title('10-year M2 for China, US, Japan, Germany')
+plt.ylabel('multiples')
+plt.show()
+```
+
+
+[How to find intersection between two dataframes or series?](https://uqer.io/labs/notebooks/%E5%93%AA%E4%BA%9BA%E8%82%A1%E5%9C%A8%E8%BF%87%E5%8E%BB10%E6%88%966%E5%B9%B4%E6%97%B6%E9%97%B4%E9%87%8C%E6%B6%A8%E4%BA%865%E5%80%8D%E6%88%962.2%E5%80%8D%EF%BC%8C%E8%87%B3%E5%B0%91%E6%8A%B5%E6%B6%88%E4%BA%86M2%E5%A2%9E%E9%80%9F%E5%B8%A6%E6%9D%A5%E7%9A%84%E8%B4%AC%E5%80%BC%EF%BC%9F.nb)     
+1. pd.merge won't work for pd.Series, but only dataframe
+2. convert Series to dataframe before apply pd.merge
+```python
+pd.merge(stocks2006, stocks2016)
+```
+
+[How to find B stocks and A stocks from a mixed stock dataframe?](https://uqer.io/labs/notebooks/%E5%93%AA%E4%BA%9BA%E8%82%A1%E5%9C%A8%E8%BF%87%E5%8E%BB10%E6%88%966%E5%B9%B4%E6%97%B6%E9%97%B4%E9%87%8C%E6%B6%A8%E4%BA%865%E5%80%8D%E6%88%962.2%E5%80%8D%EF%BC%8C%E8%87%B3%E5%B0%91%E6%8A%B5%E6%B6%88%E4%BA%86M2%E5%A2%9E%E9%80%9F%E5%B8%A6%E6%9D%A5%E7%9A%84%E8%B4%AC%E5%80%BC%EF%BC%9F.nb)    
+```python
+# all B stocks which rise over 5 times or more
+stocks5more[stocks5more.stockName.str.contains("B")]
+
+(~stocks_10years.secShortName.str.contains("B")).sum()
+```
+
+[How to column-bind two dataframes sharing on two columns?](https://uqer.io/labs/notebooks/%E5%93%AA%E4%BA%9BA%E8%82%A1%E5%9C%A8%E8%BF%87%E5%8E%BB10%E6%88%966%E5%B9%B4%E6%97%B6%E9%97%B4%E9%87%8C%E6%B6%A8%E4%BA%865%E5%80%8D%E6%88%962.2%E5%80%8D%EF%BC%8C%E8%87%B3%E5%B0%91%E6%8A%B5%E6%B6%88%E4%BA%86M2%E5%A2%9E%E9%80%9F%E5%B8%A6%E6%9D%A5%E7%9A%84%E8%B4%AC%E5%80%BC%EF%BC%9F.nb)        
+```python
+stocks_10years_price = pd.merge(stocks2007prices, stocks2016prices, on = ['secShortName','ticker'])
+```
+
+[How to access an empty dataframe?]()    
+```python
+a = pd.DataFrame()
+a.empty
+```
+
+
+[How to column-bind a dataframe and a series with name given?]()
+```python
+b = pd.Series([1,3,5])
+b.name = 'price'
+b
+c = pd.DataFrame({'a':[1,2,3], 'b':[5,6,7]})
+pd.concat([c, b], axis = 1)
 ```
