@@ -11,7 +11,7 @@
 1. unstructured patterns  
 2. structured patterns  
 
-![contact lense prescription](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![contact lense prescription](https://github.com/EmbraceLife/ipyviz/blob/master/images/contactLensData.png)
 
 ## probability
 
