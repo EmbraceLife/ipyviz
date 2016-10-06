@@ -11,8 +11,8 @@
 1. unstructured patterns     
 2. structured patterns     
 
-[Contact Lens Data]()    
-<img src="https://github.com/EmbraceLife/ipyviz/blob/master/images/contactLensData.png" height="300" width="600">    
+### Contact Lens Data    
+![](https://github.com/EmbraceLife/ipyviz/blob/master/images/contactLensData.png)
 
 
 [contact lens data can be structured in rules]()     
@@ -23,17 +23,19 @@
 ----  
 
 
-[Weather data structured in rules or decision list]()    
-<img src="https://github.com/EmbraceLife/ipyviz/blob/master/images/weatherData.png" height="300" width="600">
+### Weather data structured in rules or decision list     
+![](https://github.com/EmbraceLife/ipyviz/blob/master/images/weatherData.png)
 1. This creates 36 possible combinations (3 × 3 × 2 × 2 = 36), of which 14 are present in the set of input examples.   
 2. **decision list**: a set of rules presented in sequence as a whole      
 3. rules out of context of decision list, is incorrect    
-<img src ='https://github.com/EmbraceLife/ipyviz/blob/master/images/decisionList.png' height='300' width='600'>
-----
+
+### decision List   
+![](https://github.com/EmbraceLife/ipyviz/blob/master/images/decisionList.png)
 
 
-[Weather numberic and categoric mix data]()    
-<img src="https://github.com/EmbraceLife/ipyviz/blob/master/images/weatherMix.png" height="300" width="600">
+
+### Weather numberic and categoric mix data   
+![](https://github.com/EmbraceLife/ipyviz/blob/master/images/weatherMix.png)
 
 
 
