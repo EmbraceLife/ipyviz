@@ -12,7 +12,8 @@
 2. structured patterns     
 
 [Contact Lens Data]()    
-![contact lense prescription](https://github.com/EmbraceLife/ipyviz/blob/master/images/contactLensData.png)
+<img src="https://github.com/EmbraceLife/ipyviz/blob/master/images/weatherMix.png" height="300" width="600">    
+
 
 [contact lens data can be structured in rules]()     
 1. there are maximum 3 × 2 × 2 × 2 = 24 rules in total
@@ -20,14 +21,15 @@
 3. rules examples:
 > If tear production rate = reduced then recommendation = none Otherwise, if age = young and astigmatic = no then recommendation = soft    
 
+
 [Weather data structured in rules or decision list]()    
-![Weather Data](https://github.com/EmbraceLife/ipyviz/blob/master/images/weatherData.png)     
+<img src="https://github.com/EmbraceLife/ipyviz/blob/master/images/weatherMix.png" height="300" width="600">
 1. This creates 36 possible combinations (3 × 3 × 2 × 2 = 36), of which 14 are present in the set of input examples.   
 2. **decision list**: a set of rules presented in sequence as a whole      
 3. rules out of context of decision list, is incorrect    
 ![decision list](https://github.com/EmbraceLife/ipyviz/blob/master/images/decisionList.png)
 [Weather numberic and categoric mix data]()    
-<img src="https://github.com/EmbraceLife/ipyviz/blob/master/images/weatherMix.png" height="200" width="200">
+<img src="https://github.com/EmbraceLife/ipyviz/blob/master/images/weatherMix.png" height="300" width="600">
 
 
 
