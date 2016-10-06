@@ -22,12 +22,21 @@
 
 > If tear production rate = reduced then recommendation = none Otherwise, if age = young and astigmatic = no then recommendation = soft    
 
+### List of rules for contact lens data     
+1. classification rules
+2. association rules  
+![](https://github.com/EmbraceLife/ipyviz/blob/master/images/contactLensRules.png)   
+
+### Decision tree for contact lens data     
+1. more concise and easily visualized with clarity
+2. but incorrect with two example data
+![](https://github.com/EmbraceLife/ipyviz/blob/master/images/decisionTreeContactLens.png)
 
 
-### Weather data structured in rules or decision list
----    
+### Weather data example      
 ![](https://github.com/EmbraceLife/ipyviz/blob/master/images/weatherData.png)
----
+
+### Weather data can be structured in decision list     
 1. This creates 36 possible combinations (3 × 3 × 2 × 2 = 36), of which 14 are present in the set of input examples.   
 2. **decision list**: a set of rules presented in sequence as a whole      
 3. rules out of context of decision list, is incorrect    
@@ -35,8 +44,6 @@
 
 ### decision List example     
 ![](https://github.com/EmbraceLife/ipyviz/blob/master/images/decisionList.png)
-
-
 
 ### Weather mix data example    
 ![](https://github.com/EmbraceLife/ipyviz/blob/master/images/weatherMix.png)
