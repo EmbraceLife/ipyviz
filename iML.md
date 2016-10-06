@@ -61,14 +61,35 @@
 ### CPU performance dataset   
 1. both attributes and outcome are numeric  
 2. The classic way of dealing with continuous prediction is to write the outcome as a linear sum of the attribute values with appropriate weights  
-
-> PRP = −55.9 + 0.0489 MYCT + 0.0153 MMIN + 0.0056 MMAX + 0.6410 CACH − 0.2700 CHMIN + 1.480 CHMAX
+> PRP = −55.9 + 0.0489 MYCT + 0.0153 MMIN + 0.0056 MMAX + 0.6410 CACH − 0.2700 CHMIN + 1.480 CHMAX   
 
 3. the process of determining the weights is called regression
 4. the basic regression method is incapable of discovering nonlinear relation- ships
 
 ### CPU performance dataset
 ![](https://github.com/EmbraceLife/ipyviz/blob/master/images/cpuPerformanceData.png)
+
+
+### labor negotiation dataset   
+1. there are missing and unknown data
+2. is real life dataset
+3. data table is reshaped for better viewing
+![](https://github.com/EmbraceLife/ipyviz/blob/master/images/laborNegotiationData.png)
+
+### labor negotiation decision trees
+![](https://github.com/EmbraceLife/ipyviz/blob/master/images/laborNegotiationTrees.png)    
+**tree on left**      
+1. simple and intuitively making sense  
+2. but predict incorrectly on some data
+3. could have better predictive result on new data
+
+**tree on right**
+1. more complex and difficult to make sense
+2. more accurate but may not perform well on new data
+3. may be more likely to overfit 
+
+
+---
 
 ## probability
 
