@@ -30,7 +30,7 @@
 
 ### Decision tree for contact lens data     
 1. more concise and easily visualized with clarity
-2. but incorrect with two example data
+2. but incorrect with two example data compared to list of rules above
 ![](https://github.com/EmbraceLife/ipyviz/blob/master/images/decisionTreeContactLens.png)
 
 
@@ -78,16 +78,36 @@
 
 ### labor negotiation decision trees
 ![](https://github.com/EmbraceLife/ipyviz/blob/master/images/laborNegotiationTrees.png)    
-**tree on left**      
+**tree on left**       
 1. simple and intuitively making sense  
-2. but predict incorrectly on some data
+2. but predict incorrectly on some data    
 3. could have better predictive result on new data
 
-**tree on right**
-1. more complex and difficult to make sense
-2. more accurate but may not perform well on new data
-3. may be more likely to overfit 
+**tree on right**     
+1. more complex and difficult to make sense     
+2. more accurate but may not perform well on new data     
+3. may be more likely to overfit    
 
+
+### identification of rules for diagnosing soybean diseases
+1. 680 rows: 680 diseased plants     
+2. 35 attributes/features of a plant     
+3. 19 disease categories    
+4. table of data: sample of one plant    
+![](https://github.com/EmbraceLife/ipyviz/blob/master/images/soybeanDiseaseDiagnose.png)   
+5. two rules discovered by data examples
+> If leaf condition = normal and
+stem condition = abnormal and
+stem cankers = below soil line and canker lesion color = brown
+then
+diagnosis is rhizoctonia root rot
+If leaf malformation = absent and stem condition = abnormal and
+stem cankers = below soil line and canker lesion color = brown
+then
+diagnosis is rhizoctonia root rot
+
+6. these two rules may converge into one or are two distinct rules   
+7. ML discovered rules could outnumber and outperform experts discovered rules 
 
 ---
 
