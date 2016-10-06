@@ -25,6 +25,7 @@
 ### List of rules for contact lens data     
 1. classification rules
 2. association rules  
+
 ![](https://github.com/EmbraceLife/ipyviz/blob/master/images/contactLensRules.png)   
 
 ### Decision tree for contact lens data     
@@ -47,6 +48,16 @@
 
 ### Weather mix data example    
 ![](https://github.com/EmbraceLife/ipyviz/blob/master/images/weatherMix.png)
+
+
+### iris dataset   
+![](https://github.com/EmbraceLife/ipyviz/blob/master/images/irisData.png)    
+
+### set of rules learnt from iris dataset
+1. this set looks cumbersome and wary
+2. it should be more compact
+![](https://github.com/EmbraceLife/ipyviz/blob/master/images/irisRules.png)
+
 
 
 
