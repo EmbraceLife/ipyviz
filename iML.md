@@ -27,7 +27,8 @@
 3. rules out of context of decision list, is incorrect    
 ![decision list](https://github.com/EmbraceLife/ipyviz/blob/master/images/decisionList.png)
 [Weather numberic and categoric mix data]()    
-![Weather mixed](https://github.com/EmbraceLife/ipyviz/blob/master/images/weatherMix.png =250x250) 
+<img src="https://github.com/EmbraceLife/ipyviz/blob/master/images/weatherMix.png" height="200" width="200">
+
 
 
 ## probability
