@@ -101,13 +101,31 @@ stem condition = abnormal and
 stem cankers = below soil line and canker lesion color = brown
 then
 diagnosis is rhizoctonia root rot
-If leaf malformation = absent and stem condition = abnormal and
+
+> If leaf malformation = absent and stem condition = abnormal and
 stem cankers = below soil line and canker lesion color = brown
 then
 diagnosis is rhizoctonia root rot
 
 6. these two rules may converge into one or are two distinct rules   
-7. ML discovered rules could outnumber and outperform experts discovered rules 
+7. ML-discovered-rules could outnumber and outperform experts-discovered-rules
+
+## Real application of ML   
+### Web Mining  
+1. search engine use pageRank to reorder web pages   
+2. ML on training dataset which includes queries and human judgements     
+3. mine user's queries   
+4. users reveal their inner thoughts by search queries, blogs and facebook and etc   
+
+### Decisions involving judgements
+1. Bankers ask customers to fill questionnaires, use some statistical methods to sort out 90% of customers for clear cut of making a loan or not  
+2. remaining 10% of border line customers are decided by professional loaners   
+3. but over 50% of loans are defaults or wrong    
+4. ML outperform loan professionals by making 2/3 right with a small set of classification rules
+5. ML's set of classification rules offer new rules/insights to professionals on what or how to decide    
+
+
+
 
 ---
 
