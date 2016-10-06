@@ -58,8 +58,17 @@
 2. it should be more compact
 ![](https://github.com/EmbraceLife/ipyviz/blob/master/images/irisRules.png)
 
+### CPU performance dataset   
+1. both attributes and outcome are numeric  
+2. The classic way of dealing with continuous prediction is to write the outcome as a linear sum of the attribute values with appropriate weights  
 
+> PRP = −55.9 + 0.0489 MYCT + 0.0153 MMIN + 0.0056 MMAX + 0.6410 CACH − 0.2700 CHMIN + 1.480 CHMAX
 
+3. the process of determining the weights is called regression
+4. the basic regression method is incapable of discovering nonlinear relation- ships
+
+### CPU performance dataset
+![](https://github.com/EmbraceLife/ipyviz/blob/master/images/cpuPerformanceData.png)
 
 ## probability
 
