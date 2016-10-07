@@ -122,7 +122,58 @@ diagnosis is rhizoctonia root rot
 2. remaining 10% of border line customers are decided by professional loaners   
 3. but over 50% of loans are defaults or wrong    
 4. ML outperform loan professionals by making 2/3 right with a small set of classification rules
-5. ML's set of classification rules offer new rules/insights to professionals on what or how to decide    
+5. ML's set of classification rules offer new rules/insights to professionals on what or how to decide
+
+### screening images   
+1. ML can replace professional eye checking work for oil slick images on the ocean    
+2. problem1: example data is scarce;   
+3. problem2: actual slick image is too small in each example, while background images vary greatly    
+4. problem3: not understood    
+> 'Finally, the performance task was to serve as a filter, and the user had to be provided with a convenient means of varying the false-alarm rate'    
+
+### Load Forecast   
+1. Electricity Supply Industry make great economies/save a lot of money if they can predict in good advance and precision of future demand for electricity    
+2. current automating assistant model has 3 components: base load for the year, load periodicity over the year, and the effect of holidays    
+3. three fundamental periodicity:
+> diurnal, where usage has an early morning minimum and midday and afternoon maxima; weekly, where demand is lower at weekends; and seasonal, where increased demand during winter and summer for heating and cooling, respectively, creates a yearly cycle; and major and minor holidays    
+
+4. How to deal with different periodicity:
+> reconstructing a year’s load as a sequence of typical days, fitting the holidays in their correct position, and denormalizing the load to account for overall growth    
+
+5. add correction to the static model above:
+> take weather conditions into account by locating the previous day most similar to the current circumstances and using the historical information from that day as a predictor.
+> To guard against outliers, the eight most similar days are located and their additive corrections averaged.
+> A database was constructed of temperature, humidity, wind speed, and cloud cover at three local weather centers for each hour of the 15-year historical record, along with the difference between the actual load and that predicted by the static model.
+> A linear regression analysis was performed to determine the relative effects of these parameters on load, and the coefficients were used to weight the distance function used to locate the most similar days.    
+
+6. as a result, this ML/automated assistant can do the same work much faster and
+> Human operators can analyze the forecast’s sensitivity to simulated changes in weather and bring up for examination the “most similar” days that the system used for weather adjustment.    
+
+### Diagnostics
+1. Diagnosis is one of the principal application areas of expert systems. Although the handcrafted rules used in expert systems often perform well, machine learning can be useful in situations in which producing rules manually is too labor intensive.    
+2. Preventative maintenance of electromechanical devices such as motors and generators can forestall failures that disrupt industrial processes.    
+3. A particular chemical plant uses more than 1000 different devices, diagnosed by a human expert with 20 years or more of experience.     
+4. The derived attributes were run through an induction algorithm to produce a set of diagnostic rules. Initially, the expert was not satisfied with the rules because he could not relate them to his own knowledge and experience. **For him, mere statistical evidence was not, by itself, an adequate explanation. Further background knowledge had to be used before satisfactory rules were generated**. Although the resulting rules were quite complex, the expert liked them because he could justify them in light of his mechanical knowledge.
+
+
+### Marketing and Sales
+1. Banks: problem of  fickle customer loyalty and the challenge of detecting customers who are likely to defect so that they can be wooed back into the fold by giving them special treatment.    
+2. successful data mining allows them to be precisely targeted to those customers who are likely to yield maximum benefit. Market basket analysis is the use of association techniques to find groups of items that tend to occur together in transactions, typically supermarket checkout data.    
+3. There is enormous added value in being able to identify individual customer’s sales histories. Discount or “loyalty” cards let retailers identify all the purchases that each individual customer makes. This personal data is far more valuable than the cash value of the discount.     
+
+### ML and statistics
+1. some algorithms are statistics or probabilities     
+2. statistics help test models, prepare data, select features and visualize data 
+
+
+
+
+
+
+### Sophisticated manufacturing processes often involve tweaking control parameters   
+1. control parameters for separating gas and crude oil
+2. control parameters for manufacturing nuclear fuel pellets
+3. control parameters for printing process
 
 
 
