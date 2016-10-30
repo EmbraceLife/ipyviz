@@ -95,17 +95,16 @@
 3. 19 disease categories    
 4. table of data: sample of one plant    
 ![](https://github.com/EmbraceLife/ipyviz/blob/master/images/soybeanDiseaseDiagnose.png)   
-5. two rules discovered by data examples
+5. two rules discovered by data examples    
 > If leaf condition = normal and
-stem condition = abnormal and
-stem cankers = below soil line and canker lesion color = brown
-then
-diagnosis is rhizoctonia root rot
+> stem condition = abnormal and
+> stem cankers = below soil line and canker lesion color = brown
+> then diagnosis is rhizoctonia root rot
 
-> If leaf malformation = absent and stem condition = abnormal and
-stem cankers = below soil line and canker lesion color = brown
-then
-diagnosis is rhizoctonia root rot
+> If leaf malformation = absent
+> and stem condition = abnormal and
+> stem cankers = below soil line and canker lesion color = brown
+> then diagnosis is rhizoctonia root rot
 
 6. these two rules may converge into one or are two distinct rules   
 7. ML-discovered-rules could outnumber and outperform experts-discovered-rules
@@ -163,7 +162,7 @@ diagnosis is rhizoctonia root rot
 
 ### ML and statistics
 1. some algorithms are statistics or probabilities     
-2. statistics help test models, prepare data, select features and visualize data 
+2. statistics help test models, prepare data, select features and visualize data
 
 
 
