@@ -5,8 +5,23 @@
 
 [bokeh examples](https://github.com/EmbraceLife/ipyviz/blob/master/bokeh_example.md)
 
-## Housework
+
+
+
+### Common tasks of using git
+1. one line to update github: `lazygit "more"`   
+2. normal steps: `git status`, `git add .`, `git commit -m "more"`, `git push`    
+3. to pull from online `git pull`
+
+
 [How to update all packages in conda environment?](http://conda.pydata.org/docs/test-drive.html)    
+
+### Open jupyter notebook of my working directory
+1. go to the terminal of my working directory using ctrl+right click, select 'Services' then select 'New terminal'    
+2. choose a working environment `source activate tryme`
+3. run `jupyter notebook` for this working directory
+
+### common tasks using conda
 1. to update conda using `conda update conda`   
 2. to create an environment installing specific packages `conda create --name tryme numpy pandas bokeh`    
 3. check all environments created `conda info --envs`      
