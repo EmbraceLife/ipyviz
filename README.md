@@ -8,10 +8,10 @@
 
 ### How to print jupyter notebook in colorful PDF?
 Thanks to Dan Marrable's [easier workaround](https://github.com/jupyter/notebook/issues/840)
-1. save the notebook as html.
-2. Open the HTML in a text editor and do a search for `@media print`
-3. delete the offending `color:#000 !important;`
-4. save, open the file in a browser and print. (use Chrome)
+1. save the notebook as html.    
+2. Open the HTML in a text editor and do a search for `@media print`    
+3. delete the offending `color:#000 !important;`     
+4. save, open the file in a browser and print. (use Chrome)     
 
 
 
