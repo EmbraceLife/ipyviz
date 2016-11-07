@@ -11,7 +11,8 @@ Thanks to Dan Marrable's [easier workaround](https://github.com/jupyter/notebook
 1. save the notebook as html.    
 2. Open the HTML in a text editor and do a search for `@media print`    
 3. delete the offending `color:#000 !important;`     
-4. save, open the file in a browser and print. (use Chrome)     
+4. save, open the file in a browser and print. (use Chrome)   
+5. open the modified HTML through bracket.io, click Live Preview      
 
 
 
